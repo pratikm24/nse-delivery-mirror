@@ -1,0 +1,52 @@
+name: NSE delivery mirror
+
+# Downloads NSE's full bhavcopy daily and commits it, so Google Apps Script can
+# read it from raw.githubusercontent.com. NSE does not answer Google's servers;
+# it answers GitHub's runners.
+
+on:
+  schedule:
+    # 14:45 UTC = 20:15 IST, a few hours after the 15:30 IST close.
+    # A second pass at 17:15 UTC = 22:45 IST catches a late publication.
+    - cron: "45 14 * * 1-5"
+    - cron: "15 17 * * 1-5"
+  workflow_dispatch:
+    inputs:
+      backfill_days:
+        description: "How many calendar days back to try (default 3)"
+        required: false
+        default: "3"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: nse-delivery
+  cancel-in-progress: false
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Fetch bhavcopy
+        env:
+          BACKFILL_DAYS: ${{ github.event.inputs.backfill_days || '3' }}
+        run: python scripts/fetch_delivery.py
+
+      - name: Commit any new sessions
+        run: |
+          git config user.name  "nse-delivery-bot"
+          git config user.email "nse-delivery-bot@users.noreply.github.com"
+          git add delivery
+          if git diff --cached --quiet; then
+            echo "No new sessions — nothing to commit."
+          else
+            git commit -m "NSE delivery: $(date -u +%Y-%m-%d)"
+            git push
+          fi
