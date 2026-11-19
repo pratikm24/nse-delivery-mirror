@@ -1,0 +1,206 @@
+//@version=6
+indicator("India FnO Badge + RS", shorttitle = "FnO RS", overlay = true, dynamic_requests = true)
+
+// FnO BADGE (unchanged logic from v2.0)
+// Marks a chart "FnO" when TradingView has a LIVE futures feed for it (one request, no stock list).
+//   FnO (green) live futures feed | FnO ? (grey) feed stale | No FnO (grey) no feed | FnO - (grey) not checked
+//
+// 3M RS (new)
+// Percentile 1-99 of the stock's 3-month return among the F&O stocks on your Research 360 sector list
+// (lowest = 1, highest = 99). Shown under the badge as  "RS <last week> > <now>  <as-of date>".
+// A stock is unranked only if NSE lists a split/bonus/consolidation/demerger/arrangement/rights ex-date
+// in the window, or it has no price history. Ranking data is computed weekly by a GitHub job and
+// written into this script (Pine cannot download data). It turns amber when older than the limit below.
+//
+// SECTOR TABLE (new, toggle in settings)
+// Sector RS = equal-weight average 3M return of the sector's ranked stocks, percentile 1-99 across sectors.
+// Generated __GENERATED__ | stock data as of __ASOF__ (previous week: __PREV__)
+
+f_ist(int t) =>
+    na(t) ? "n/a" : str.format_time(t, "dd MMM yyyy", "Asia/Kolkata")
+
+string cornerInput = input.string("Middle right", "Corner", options = ["Top right", "Top left", "Middle right", "Middle left", "Bottom right", "Bottom left"])
+string sizeInput = input.string("Tiny", "Text size", options = ["Tiny", "Small", "Normal", "Large"])
+bool showOtherInput = input.bool(true, "Show status when FnO is not detected")
+color badgeColorInput = input.color(color.rgb(22, 128, 72), "FnO background")
+int maxAgeInput = input.int(7, "Max futures data age (days)", minval = 1, maxval = 30, group = "Advanced", tooltip = "How old the latest futures daily bar may be and still count as live. 7 covers weekends and market-holiday clusters.")
+string overrideInput = input.string("", "Futures symbol override", group = "Advanced", tooltip = "Usually leave blank. If a stock/index has an unusual futures name, enter its full TradingView symbol, such as NSE:HDFCBANK1! or NSE:FINNIFTY1!. Not needed on a futures/options chart.")
+
+string badgePosition = switch cornerInput
+    "Top left" => position.top_left
+    "Bottom right" => position.bottom_right
+    "Bottom left" => position.bottom_left
+    "Middle right" => position.middle_right
+    "Middle left" => position.middle_left
+    => position.top_right
+
+string badgeSize = switch sizeInput
+    "Tiny" => size.tiny
+    "Normal" => size.normal
+    "Large" => size.large
+    => size.small
+
+// Delayed charts may identify the exchange as NSE_DLY / BSE_DLY / MCX_DLY.
+string exchange = str.replace_all(syminfo.prefix, "_DLY", "")
+bool isNseStock = exchange == "NSE" and syminfo.type == "stock"
+bool isNseIndex = exchange == "NSE" and syminfo.type == "index"
+bool isBseIndex = exchange == "BSE" and syminfo.type == "index"
+bool isIndianExchange = exchange == "NSE" or exchange == "BSE" or exchange == "MCX"
+bool isDerivativeChart = isIndianExchange and (syminfo.type == "futures" or syminfo.type == "option")
+bool checkFutures = isNseStock or isNseIndex or isBseIndex
+
+// TradingView replaces hyphens and ampersands with underscores in these codes.
+string stockCode = str.replace_all(str.replace_all(syminfo.ticker, "-", "_"), "&", "_")
+string futuresCode = stockCode
+
+// Cash indices and their futures do not always share a TradingView ticker.
+if isNseIndex
+    futuresCode := switch stockCode
+        "CNXFINANCE" => "FINNIFTY"
+        "NIFTY_MID_SELECT" => "MIDCPNIFTY"
+        "NIFTYJR" => "NIFTYNXT50"
+        "NIFTY_FPI_150" => "NIFTYFPI"
+        => stockCode
+else if isBseIndex
+    futuresCode := switch stockCode
+        "SENSEX" => "BSX"
+        "BANK" => "BKX"
+        => stockCode
+
+string futuresExchange = isBseIndex ? "BSE:" : "NSE:"
+string futuresId = overrideInput == "" ? futuresExchange + futuresCode + "1!" : overrideInput
+
+// Single request. calc_bars_count keeps it to the last 10 daily bars of the future.
+float fClose = na
+int fTime = na
+if checkFutures
+    [reqClose, reqTime] = request.security(futuresId, "1D", [close, time], gaps = barmerge.gaps_off, lookahead = barmerge.lookahead_off, ignore_invalid_symbol = true, calc_bars_count = 10)
+    fClose := reqClose
+    fTime := reqTime
+
+bool hasFeed = not na(fClose) and not na(fTime)
+float ageDays = hasFeed ? (timenow - fTime) / 86400000.0 : na
+bool liveFeed = hasFeed and ageDays <= maxAgeInput
+bool detected = isDerivativeChart or liveFeed
+
+// ----- RS / sector settings -----
+bool showRsInput = input.bool(true, "Show 3M RS under the badge", group = "RS")
+bool showSectorInput = input.bool(true, "Show sector RS table", group = "RS")
+string sectorCornerInput = input.string("Bottom right", "Sector table corner", options = ["Top right", "Top left", "Middle right", "Middle left", "Bottom right", "Bottom left"], group = "RS")
+string sectorSizeInput = input.string("Tiny", "Sector table text size", options = ["Tiny", "Small", "Normal"], group = "RS")
+int staleDaysInput = input.int(9, "Mark RS data stale after (days)", minval = 1, maxval = 60, group = "RS", tooltip = "The ranking is refreshed weekly. Older than this and the RS turns amber.")
+
+string sectorPosition = switch sectorCornerInput
+    "Top right" => position.top_right
+    "Top left" => position.top_left
+    "Middle right" => position.middle_right
+    "Middle left" => position.middle_left
+    "Bottom left" => position.bottom_left
+    => position.bottom_right
+string sectorSize = switch sectorSizeInput
+    "Small" => size.small
+    "Normal" => size.normal
+    => size.tiny
+
+// ----- Data (written by the weekly job; symbols use TradingView's underscore form) -----
+string RS_ASOF = "__ASOF__"
+string RS_PREV = "__PREV__"
+string RS_DATA =
+__RS_DATA__
+string SEC_DATA =
+__SEC_DATA__
+string SEC_MEMBERS =
+__SEC_MEMBERS__
+
+f_rs(string code) =>
+    string hay = "," + RS_DATA
+    string key = "," + code + ":"
+    int p = str.pos(hay, key)
+    int cur = na
+    int prv = na
+    bool found = not na(p)
+    if found
+        string rest = str.substring(hay, p + str.length(key))
+        int e = str.pos(rest, ",")
+        string seg = na(e) ? rest : str.substring(rest, 0, e)
+        string[] parts = str.split(seg, ">")
+        cur := int(str.tonumber(array.get(parts, 0)))
+        string pv = array.size(parts) > 1 ? array.get(parts, 1) : "-"
+        prv := pv == "-" ? na : int(str.tonumber(pv))
+    [found, cur, prv]
+
+f_sector(string code) =>
+    string name = ""
+    string[] secs = str.split(SEC_MEMBERS, ";")
+    for sec in secs
+        int eq = str.pos(sec, "=")
+        if not na(eq)
+            if str.contains(str.substring(sec, eq + 1), "," + code + ",")
+                name := str.substring(sec, 0, eq)
+    name
+
+f_arrow(int prv, int cur) =>
+    na(prv) ? str.tostring(cur) : str.tostring(prv) + " → " + str.tostring(cur)
+
+f_col(int prv, int cur) =>
+    na(prv) or na(cur) ? color.white : cur > prv ? color.rgb(76, 217, 130) : cur < prv ? color.rgb(255, 107, 107) : color.white
+
+int asofTs = timestamp("Asia/Kolkata", int(str.tonumber(str.substring(RS_ASOF, 0, 4))), int(str.tonumber(str.substring(RS_ASOF, 5, 7))), int(str.tonumber(str.substring(RS_ASOF, 8, 10))), 15, 30)
+float dataAgeDays = (timenow - asofTs) / 86400000.0
+bool rsStale = dataAgeDays > staleDaysInput
+string asofShort = str.format_time(asofTs, "dd MMM", "Asia/Kolkata")
+
+var table badge = table.new(badgePosition, 1, 2, force_overlay = true)
+var table sectorTable = showSectorInput ? table.new(sectorPosition, 2, __NROWS__, force_overlay = true) : na
+
+if barstate.islast
+    string badgeText = detected ? "FnO" : checkFutures ? (hasFeed ? "FnO ?" : "No FnO") : "FnO -"
+    string badgeTooltip = "Supported: NSE stocks, NSE/BSE indices, and NSE/BSE/MCX futures/options charts."
+    if isDerivativeChart
+        badgeTooltip := "This is already a " + syminfo.prefix + " futures/options chart.\n" + ticker.standard(syminfo.tickerid) + "\nThe badge marks a derivatives instrument; it does not check whether options exist on its underlying."
+    else if liveFeed
+        badgeTooltip := "Live futures feed found on TradingView.\nChecked: " + futuresId + "\nLatest futures bar: " + f_ist(fTime) + " (" + str.tostring(ageDays, "#.#") + " days old, limit " + str.tostring(maxAgeInput) + ")\nThis is a feed-based check, not an official eligibility flag."
+    else if checkFutures and hasFeed
+        badgeTooltip := "A futures feed exists but looks stale.\nChecked: " + futuresId + "\nLatest futures bar: " + f_ist(fTime) + " (" + str.tostring(ageDays, "#.#") + " days old, limit " + str.tostring(maxAgeInput) + ")\nThe stock may have left F&O, or the feed is delayed."
+    else if checkFutures
+        badgeTooltip := "No futures feed found under this name.\nChecked: " + futuresId + "\nChart: " + ticker.standard(syminfo.tickerid) + "\nEither the stock is not in F&O, or its futures use a different TradingView name (use the override input).\nThis is not an official eligibility flag."
+    bool visibleBadge = detected or showOtherInput
+    table.cell(badge, 0, 0, text = visibleBadge ? badgeText : "", text_color = color.white, text_size = badgeSize, bgcolor = visibleBadge ? (detected ? badgeColorInput : color.new(color.gray, 25)) : color.new(color.white, 100), tooltip = visibleBadge ? badgeTooltip : "")
+
+    // RS row (NSE stocks only)
+    [rsFound, rsCur, rsPrv] = f_rs(stockCode)
+    string mySector = isNseStock ? f_sector(stockCode) : ""
+    if showRsInput and isNseStock and visibleBadge
+        color amber = color.rgb(214, 158, 46)
+        string rsText = "RS –"
+        string rsTip = "Not ranked.\nEither this stock is not on the F&O sector list used, or it is excluded (NSE split/bonus/rights ex-date in the 3-month window, or too little price history)."
+        color rsBg = color.new(color.gray, 25)
+        color rsTxt = color.white
+        if rsFound
+            rsText := "RS " + f_arrow(rsPrv, rsCur) + "  " + asofShort + (rsStale ? " ⚠" : "")
+            rsTxt := f_col(rsPrv, rsCur)
+            rsBg := rsStale ? color.new(amber, 25) : color.new(#131722, 10)
+            rsTip := "3M relative strength, percentile 1-99 among F&O stocks (higher = stronger).\nLast week (" + RS_PREV + "): " + (na(rsPrv) ? "not ranked" : str.tostring(rsPrv)) + "\nNow (" + RS_ASOF + "): " + str.tostring(rsCur) + (mySector != "" ? "\nSector: " + mySector : "") + (rsStale ? "\nDATA IS " + str.tostring(dataAgeDays, "#") + " DAYS OLD: refresh the script." : "")
+        table.cell(badge, 0, 1, text = rsText, text_color = rsStale ? color.white : rsTxt, text_size = badgeSize, bgcolor = rsBg, tooltip = rsTip)
+    else
+        table.cell(badge, 0, 1, text = "", bgcolor = color.new(color.white, 100))
+
+    // Sector table
+    if showSectorInput
+        string[] rows = str.split(SEC_DATA, ";")
+        table.cell(sectorTable, 0, 0, text = "Sector RS  (last wk → now)", text_color = color.white, text_size = sectorSize, bgcolor = color.new(#131722, 10), text_halign = text.align_left)
+        table.cell(sectorTable, 1, 0, text = asofShort + (rsStale ? " ⚠" : ""), text_color = rsStale ? color.rgb(214, 158, 46) : color.rgb(170, 170, 170), text_size = sectorSize, bgcolor = color.new(#131722, 10))
+        for i = 0 to array.size(rows) - 1
+            string[] f = str.split(array.get(rows, i), ":")
+            string nm = array.get(f, 0)
+            string[] rv = str.split(array.get(f, 1), ">")
+            int cur = int(str.tonumber(array.get(rv, 0)))
+            string pv = array.get(rv, 1)
+            int prv = pv == "-" ? na : int(str.tonumber(pv))
+            int cnt = int(str.tonumber(array.get(f, 2)))
+            bool mine = nm == mySector
+            color bg = mine ? color.new(color.rgb(41, 98, 255), 35) : color.new(#131722, 25)
+            table.cell(sectorTable, 0, i + 1, text = nm + (cnt <= 2 ? " *" : ""), text_color = color.white, text_size = sectorSize, bgcolor = bg, text_halign = text.align_left, tooltip = str.tostring(cnt) + " ranked stock(s)")
+            table.cell(sectorTable, 1, i + 1, text = f_arrow(prv, cur), text_color = f_col(prv, cur), text_size = sectorSize, bgcolor = bg, text_halign = text.align_right)
+        table.cell(sectorTable, 0, array.size(rows) + 1, text = "* only 1-2 stocks: noisy", text_color = color.rgb(170, 170, 170), text_size = sectorSize, bgcolor = color.new(#131722, 25), text_halign = text.align_left)
+        table.cell(sectorTable, 1, array.size(rows) + 1, text = "", bgcolor = color.new(#131722, 25))

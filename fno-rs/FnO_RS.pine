@@ -1,0 +1,213 @@
+//@version=6
+indicator("India FnO Badge + RS", shorttitle = "FnO RS", overlay = true, dynamic_requests = true)
+
+// FnO BADGE (unchanged logic from v2.0)
+// Marks a chart "FnO" when TradingView has a LIVE futures feed for it (one request, no stock list).
+//   FnO (green) live futures feed | FnO ? (grey) feed stale | No FnO (grey) no feed | FnO - (grey) not checked
+//
+// 3M RS (new)
+// Percentile 1-99 of the stock's 3-month return among the F&O stocks on your Research 360 sector list
+// (lowest = 1, highest = 99). Shown under the badge as  "RS <last week> > <now>  <as-of date>".
+// A stock is unranked only if NSE lists a split/bonus/consolidation/demerger/arrangement/rights ex-date
+// in the window, or it has no price history. Ranking data is computed weekly by a GitHub job and
+// written into this script (Pine cannot download data). It turns amber when older than the limit below.
+//
+// SECTOR TABLE (new, toggle in settings)
+// Sector RS = equal-weight average 3M return of the sector's ranked stocks, percentile 1-99 across sectors.
+// Generated 2026-11-19 | stock data as of 2026-11-18 (previous week: 2026-11-11)
+
+f_ist(int t) =>
+    na(t) ? "n/a" : str.format_time(t, "dd MMM yyyy", "Asia/Kolkata")
+
+string cornerInput = input.string("Middle right", "Corner", options = ["Top right", "Top left", "Middle right", "Middle left", "Bottom right", "Bottom left"])
+string sizeInput = input.string("Tiny", "Text size", options = ["Tiny", "Small", "Normal", "Large"])
+bool showOtherInput = input.bool(true, "Show status when FnO is not detected")
+color badgeColorInput = input.color(color.rgb(22, 128, 72), "FnO background")
+int maxAgeInput = input.int(7, "Max futures data age (days)", minval = 1, maxval = 30, group = "Advanced", tooltip = "How old the latest futures daily bar may be and still count as live. 7 covers weekends and market-holiday clusters.")
+string overrideInput = input.string("", "Futures symbol override", group = "Advanced", tooltip = "Usually leave blank. If a stock/index has an unusual futures name, enter its full TradingView symbol, such as NSE:HDFCBANK1! or NSE:FINNIFTY1!. Not needed on a futures/options chart.")
+
+string badgePosition = switch cornerInput
+    "Top left" => position.top_left
+    "Bottom right" => position.bottom_right
+    "Bottom left" => position.bottom_left
+    "Middle right" => position.middle_right
+    "Middle left" => position.middle_left
+    => position.top_right
+
+string badgeSize = switch sizeInput
+    "Tiny" => size.tiny
+    "Normal" => size.normal
+    "Large" => size.large
+    => size.small
+
+// Delayed charts may identify the exchange as NSE_DLY / BSE_DLY / MCX_DLY.
+string exchange = str.replace_all(syminfo.prefix, "_DLY", "")
+bool isNseStock = exchange == "NSE" and syminfo.type == "stock"
+bool isNseIndex = exchange == "NSE" and syminfo.type == "index"
+bool isBseIndex = exchange == "BSE" and syminfo.type == "index"
+bool isIndianExchange = exchange == "NSE" or exchange == "BSE" or exchange == "MCX"
+bool isDerivativeChart = isIndianExchange and (syminfo.type == "futures" or syminfo.type == "option")
+bool checkFutures = isNseStock or isNseIndex or isBseIndex
+
+// TradingView replaces hyphens and ampersands with underscores in these codes.
+string stockCode = str.replace_all(str.replace_all(syminfo.ticker, "-", "_"), "&", "_")
+string futuresCode = stockCode
+
+// Cash indices and their futures do not always share a TradingView ticker.
+if isNseIndex
+    futuresCode := switch stockCode
+        "CNXFINANCE" => "FINNIFTY"
+        "NIFTY_MID_SELECT" => "MIDCPNIFTY"
+        "NIFTYJR" => "NIFTYNXT50"
+        "NIFTY_FPI_150" => "NIFTYFPI"
+        => stockCode
+else if isBseIndex
+    futuresCode := switch stockCode
+        "SENSEX" => "BSX"
+        "BANK" => "BKX"
+        => stockCode
+
+string futuresExchange = isBseIndex ? "BSE:" : "NSE:"
+string futuresId = overrideInput == "" ? futuresExchange + futuresCode + "1!" : overrideInput
+
+// Single request. calc_bars_count keeps it to the last 10 daily bars of the future.
+float fClose = na
+int fTime = na
+if checkFutures
+    [reqClose, reqTime] = request.security(futuresId, "1D", [close, time], gaps = barmerge.gaps_off, lookahead = barmerge.lookahead_off, ignore_invalid_symbol = true, calc_bars_count = 10)
+    fClose := reqClose
+    fTime := reqTime
+
+bool hasFeed = not na(fClose) and not na(fTime)
+float ageDays = hasFeed ? (timenow - fTime) / 86400000.0 : na
+bool liveFeed = hasFeed and ageDays <= maxAgeInput
+bool detected = isDerivativeChart or liveFeed
+
+// ----- RS / sector settings -----
+bool showRsInput = input.bool(true, "Show 3M RS under the badge", group = "RS")
+bool showSectorInput = input.bool(true, "Show sector RS table", group = "RS")
+string sectorCornerInput = input.string("Bottom right", "Sector table corner", options = ["Top right", "Top left", "Middle right", "Middle left", "Bottom right", "Bottom left"], group = "RS")
+string sectorSizeInput = input.string("Tiny", "Sector table text size", options = ["Tiny", "Small", "Normal"], group = "RS")
+int staleDaysInput = input.int(9, "Mark RS data stale after (days)", minval = 1, maxval = 60, group = "RS", tooltip = "The ranking is refreshed weekly. Older than this and the RS turns amber.")
+
+string sectorPosition = switch sectorCornerInput
+    "Top right" => position.top_right
+    "Top left" => position.top_left
+    "Middle right" => position.middle_right
+    "Middle left" => position.middle_left
+    "Bottom left" => position.bottom_left
+    => position.bottom_right
+string sectorSize = switch sectorSizeInput
+    "Small" => size.small
+    "Normal" => size.normal
+    => size.tiny
+
+// ----- Data (written by the weekly job; symbols use TradingView's underscore form) -----
+string RS_ASOF = "2026-11-18"
+string RS_PREV = "2026-11-11"
+string RS_DATA =
+     "360ONE:70>61,ABB:30>29,ABCAPITAL:66>47,ADANIENSOL:38>17,ADANIENT:27>26,ADANIGREEN:77>71,ADANIPORTS:88>92,ADANIPOWER:59>58,ALKEM:45>54,AMBER:15>18,AMBUJACEM:40>31,ANANDRATHI:81>86,ANGELONE:93>94,APLAPOLLO:65>83,APOLLOHOSP:60>52,ASHOKLEY:35>58,ASIANPAINT:52>35,ASTRAL:9>24,ATHERENERG:99>97,AUBANK:31>21,AUROPHARMA:82>86,AXISBANK:83>82,BAJAJ_AUTO:31>37,BAJAJFINSV:37>26,BAJFINANCE:60>55,BANDHANBNK:58>54,BANKBARODA:88>88,BANKINDIA:86>74,BDL:3>8,BEL:47>51,BHARATFORG:8>10,BHARTIARTL:85>85,BHEL:57>76,BIOCON:19>14,BLUESTARCO:82>72,BOSCHLTD:64>89,BPCL:54>56,BRITANNIA:16>13,BSE:89>81,CAMS:41>30,CANBK:68>67,CDSL:74>73,CGPOWER:25>36,CHOLAFIN:62>39,CIPLA:56>46,COALINDIA:45>53,COCHINSHIP:6>4,COFORGE:92>88,CO" +
+     "LPAL:26>15,CONCOR:13>18,COROMANDEL:44>41,CROMPTON:15>20,CUB:72>80,CUMMINSIND:4>4,DABUR:42>35,DATAPATTNS:19>33,DELHIVERY:58>33,DIVISLAB:98>99,DIXON:26>31,DLF:91>91,DMART:20>10,DRREDDY:94>92,EICHERMOT:46>40,ENRIN:11>6,ETERNAL:92>90,FEDERALBNK:63>68,FORCEMOT:86>82,FORTIS:18>6,GAIL:83>81,GLENMARK:91>94,GMRAIRPORT:67>43,GODFRYPHLP:11>5,GODREJCP:47>11,GODREJPROP:42>20,GRASIM:40>40,GVT_D:67>42,HAL:35>63,HAVELLS:23>32,HCLTECH:69>70,HDFCAMC:73>79,HDFCBANK:87>87,HDFCLIFE:75>76,HEROMOTOCO:34>28,HINDALCO:17>30,HINDPETRO:74>70,HINDUNILVR:52>49,HINDZINC:43>55,HYUNDAI:46>50,ICICIBANK:89>84,ICICIGI:65>68,IDEA:16>60,IDFCFIRSTB:50>41,IEX:37>26,INDHOTEL:95>95,INDIANB:76>75,INDIGO:74>77,INDUSINDBK:28>23,INDUSTO" +
+     "WER:73>78,INFY:57>45,INOXWIND:5>21,IOC:72>74,IREDA:70>65,IRFC:43>55,ITC:84>69,JINDALSTEL:60>75,JIOFIN:33>29,JSWENERGY:40>34,JSWSTEEL:69>74,JUBLFOOD:12>22,KALYANKJIL:80>85,KARURVYSYA:93>93,KAYNES:7>27,KEI:1>2,KFINTECH:51>60,KOTAKBANK:97>97,KPITTECH:21>16,LAURUSLABS:97>99,LICHSGFIN:96>89,LICI:51>53,LODHA:56>45,LT:66>72,LTF:13>12,LTM:27>16,LUPIN:24>21,M_M:53>60,MAHABANK:94>91,MANAPPURAM:10>22,MANKIND:85>84,MARICO:78>80,MARUTI:36>37,MAXHEALTH:64>23,MAZDOCK:3>3,MCX:94>98,MFSL:28>15,MOTHERSON:36>61,MOTILALOFS:99>98,MPHASIS:55>38,MUTHOOTFIN:32>57,NAM_INDIA:29>35,NATIONALUM:7>8,NAUKRI:16>17,NAVINFLUOR:96>94,NBCC:23>11,NESTLEIND:22>13,NHPC:50>65,NMDC:9>7,NTPC:45>44,NYKAA:84>84,OBEROIRLTY:50>46,OFSS:1" +
+     "1>9,OIL:30>39,ONGC:41>50,PAGEIND:14>40,PATANJALI:90>96,PAYTM:95>89,PERSISTENT:77>79,PETRONET:90>95,PFC:18>25,PGEL:29>30,PHOENIXLTD:89>90,PIDILITIND:34>36,PIIND:2>1,PNB:98>96,PNBHOUSING:53>51,POLICYBZR:1>1,POLYCAB:8>16,POWERGRID:49>52,POWERINDIA:21>7,PREMIERENE:10>9,PRESTIGE:71>70,RADICO:55>49,RBLBANK:65>59,RECLTD:17>25,RELIANCE:68>63,RVNL:12>27,SAGILITY:76>69,SAIL:48>66,SBICARD:32>24,SBILIFE:63>43,SBIN:79>59,SHREECEM:62>56,SHRIRAMFIN:22>11,SIEMENS:26>32,SOLARINDS:33>64,SONACOMS:79>93,SRF:39>48,SUNPHARMA:59>50,SUPREMEIND:21>44,SUZLON:5>5,SWIGGY:2>2,SYRMA:54>65,TATACONSUM:75>66,TATAELXSI:61>67,TATAPOWER:25>38,TATASTEEL:48>62,TCS:71>64,TECHM:84>83,TIINDIA:4>6,TITAN:35>45,TMPV:6>12,TORNTPHARM:38" +
+     ">47,TRENT:81>78,TVSMOTOR:61>71,UJJIVANSFB:14>14,ULTRACEMCO:80>73,UNIONBANK:87>87,UNITDSPR:44>28,UNOMINDA:78>79,UPL:55>48,VBL:49>57,VEDL:39>42,VMM:20>19,VOLTAS:30>19,WAAREEENER:24>34,WIPRO:70>77,YESBANK:6>3,ZYDUSLIFE:79>62"
+string SEC_DATA =
+     "Pharmaceuticals & Biotechnology:99>99:13;Realty:95>81:6;Hotels Restaurants & Tourism:90>90:2;Banking and Finance:86>77:52;Oil & Gas:81>86:7;Telecom Services:77>95:3;Healthcare:72>14:4;Software & Services:68>59:15;Food, Beverages & Tobacco:63>37:6;Diversified:59>19:2;Automobiles & Auto Components:54>68:16;Cement and Construction:50>46:8;FMCG:46>41:8;Utilities:41>54:10;Transportation:37>50:5;Fertilizers:32>32:1;Textiles Apparels & Accessories:28>72:3;Chemicals & Petrochemicals:23>28:5;Retailing:19>23:7;Metals & Mining:14>63:11;Commercial Services & Supplies:10>5:1;Consumer Durables:5>1:14;General Industrials:1>10:18"
+string SEC_MEMBERS =
+     "General Industrials=,BHEL,BDL,SUPREMEIND,ASTRAL,GVT_D,SIEMENS,DATAPATTNS,POWERINDIA,CUMMINSIND,ABB,INOXWIND,BEL,CGPOWER,HAL,BHARATFORG,MAZDOCK,SUZLON,SOLARINDS,;Banking and Finance=,IREDA,360ONE,PNBHOUSING,CHOLAFIN,INDUSINDBK,BAJFINANCE,SBILIFE,ANANDRATHI,IDFCFIRSTB,SHRIRAMFIN,MOTILALOFS,KOTAKBANK,CDSL,ICICIBANK,HDFCBANK,RBLBANK,BSE,SBICARD,RECLTD,PFC,ANGELONE,FEDERALBNK,AUBANK,MFSL,LICI,SBIN,KFINTECH,HDFCLIFE,UNIONBANK,IRFC,CUB,JIOFIN,AXISBANK,MAHABANK,MCX,CANBK,PNB,HDFCAMC,BANKBARODA,LTF,INDIANB,BANKINDIA,MUTHOOTFIN,NAM_INDIA,ICICILIFE,KARURVYSYA,YESBANK,ICICIGI,BANDHANBNK,MANAPPURAM,IEX,LICHSGFIN,UJJIVANSFB,;Cement and Construction=,AMBUJACEM,GRASIM,LT,ULTRACEMCO,GMRAIRPORT,NBCC,RVNL,SHRE" +
+     "ECEM,;Realty=,OBEROIRLTY,PRESTIGE,DLF,LODHA,GODREJPROP,PHOENIXLTD,;FMCG=,COLPAL,MARICO,GODREJCP,DABUR,NESTLEIND,BRITANNIA,PATANJALI,HINDUNILVR,;Consumer Durables=,BLUESTARCO,SYRMA,AMBER,CROMPTON,PGEL,KAYNES,DIXON,PREMIERENE,ASIANPAINT,VOLTAS,KEI,HAVELLS,POLYCAB,WAAREEENER,;Software & Services=,INFY,OFSS,LTM,COFORGE,POLICYBZR,PERSISTENT,TCS,HCLTECH,TECHM,PAYTM,CAMS,TATAELXSI,MPHASIS,WIPRO,KPITTECH,;Automobiles & Auto Components=,ATHERENERG,MOTHERSON,TIINDIA,SONACOMS,BAJAJ_AUTO,FORCEMOT,TVSMOTOR,HEROMOTOCO,EICHERMOT,BOSCHLTD,TMPV,UNOMINDA,MARUTI,M_M,HYUNDAI,ASHOKLEY,;Oil & Gas=,HINDPETRO,BPCL,ONGC,OIL,IOC,PETRONET,RELIANCE,;Utilities=,ADANIENSOL,JSWENERGY,NTPC,POWERGRID,NHPC,ENRIN,TATAPOWER,GA" +
+     "IL,ADANIPOWER,ADANIGREEN,;Metals & Mining=,SAIL,HINDZINC,JINDALSTEL,JSWSTEEL,COALINDIA,TATASTEEL,VEDL,NMDC,APLAPOLLO,NATIONALUM,HINDALCO,;Retailing=,NYKAA,TRENT,DMART,ETERNAL,VMM,SWIGGY,NAUKRI,;Diversified=,BAJAJFINSV,ABCAPITAL,;Telecom Services=,IDEA,INDUSTOWER,BHARTIARTL,;Healthcare=,SAGILITY,MAXHEALTH,FORTIS,APOLLOHOSP,;Chemicals & Petrochemicals=,UPL,SRF,PIDILITIND,PIIND,NAVINFLUOR,;Pharmaceuticals & Biotechnology=,ZYDUSLIFE,AUROPHARMA,ALKEM,TORNTPHARM,LAURUSLABS,LUPIN,BIOCON,CIPLA,SUNPHARMA,MANKIND,DRREDDY,DIVISLAB,GLENMARK,;Textiles Apparels & Accessories=,PAGEIND,TITAN,KALYANKJIL,;Hotels Restaurants & Tourism=,JUBLFOOD,INDHOTEL,;Transportation=,INDIGO,ADANIPORTS,DELHIVERY,COCHINSHIP,C" +
+     "ONCOR,;Food, Beverages & Tobacco=,UNITDSPR,ITC,RADICO,VBL,TATACONSUM,GODFRYPHLP,;Commercial Services & Supplies=,ADANIENT,;Fertilizers=,COROMANDEL,"
+
+f_rs(string code) =>
+    string hay = "," + RS_DATA
+    string key = "," + code + ":"
+    int p = str.pos(hay, key)
+    int cur = na
+    int prv = na
+    bool found = not na(p)
+    if found
+        string rest = str.substring(hay, p + str.length(key))
+        int e = str.pos(rest, ",")
+        string seg = na(e) ? rest : str.substring(rest, 0, e)
+        string[] parts = str.split(seg, ">")
+        cur := int(str.tonumber(array.get(parts, 0)))
+        string pv = array.size(parts) > 1 ? array.get(parts, 1) : "-"
+        prv := pv == "-" ? na : int(str.tonumber(pv))
+    [found, cur, prv]
+
+f_sector(string code) =>
+    string name = ""
+    string[] secs = str.split(SEC_MEMBERS, ";")
+    for sec in secs
+        int eq = str.pos(sec, "=")
+        if not na(eq)
+            if str.contains(str.substring(sec, eq + 1), "," + code + ",")
+                name := str.substring(sec, 0, eq)
+    name
+
+f_arrow(int prv, int cur) =>
+    na(prv) ? str.tostring(cur) : str.tostring(prv) + " → " + str.tostring(cur)
+
+f_col(int prv, int cur) =>
+    na(prv) or na(cur) ? color.white : cur > prv ? color.rgb(76, 217, 130) : cur < prv ? color.rgb(255, 107, 107) : color.white
+
+int asofTs = timestamp("Asia/Kolkata", int(str.tonumber(str.substring(RS_ASOF, 0, 4))), int(str.tonumber(str.substring(RS_ASOF, 5, 7))), int(str.tonumber(str.substring(RS_ASOF, 8, 10))), 15, 30)
+float dataAgeDays = (timenow - asofTs) / 86400000.0
+bool rsStale = dataAgeDays > staleDaysInput
+string asofShort = str.format_time(asofTs, "dd MMM", "Asia/Kolkata")
+
+var table badge = table.new(badgePosition, 1, 2, force_overlay = true)
+var table sectorTable = showSectorInput ? table.new(sectorPosition, 2, 25, force_overlay = true) : na
+
+if barstate.islast
+    string badgeText = detected ? "FnO" : checkFutures ? (hasFeed ? "FnO ?" : "No FnO") : "FnO -"
+    string badgeTooltip = "Supported: NSE stocks, NSE/BSE indices, and NSE/BSE/MCX futures/options charts."
+    if isDerivativeChart
+        badgeTooltip := "This is already a " + syminfo.prefix + " futures/options chart.\n" + ticker.standard(syminfo.tickerid) + "\nThe badge marks a derivatives instrument; it does not check whether options exist on its underlying."
+    else if liveFeed
+        badgeTooltip := "Live futures feed found on TradingView.\nChecked: " + futuresId + "\nLatest futures bar: " + f_ist(fTime) + " (" + str.tostring(ageDays, "#.#") + " days old, limit " + str.tostring(maxAgeInput) + ")\nThis is a feed-based check, not an official eligibility flag."
+    else if checkFutures and hasFeed
+        badgeTooltip := "A futures feed exists but looks stale.\nChecked: " + futuresId + "\nLatest futures bar: " + f_ist(fTime) + " (" + str.tostring(ageDays, "#.#") + " days old, limit " + str.tostring(maxAgeInput) + ")\nThe stock may have left F&O, or the feed is delayed."
+    else if checkFutures
+        badgeTooltip := "No futures feed found under this name.\nChecked: " + futuresId + "\nChart: " + ticker.standard(syminfo.tickerid) + "\nEither the stock is not in F&O, or its futures use a different TradingView name (use the override input).\nThis is not an official eligibility flag."
+    bool visibleBadge = detected or showOtherInput
+    table.cell(badge, 0, 0, text = visibleBadge ? badgeText : "", text_color = color.white, text_size = badgeSize, bgcolor = visibleBadge ? (detected ? badgeColorInput : color.new(color.gray, 25)) : color.new(color.white, 100), tooltip = visibleBadge ? badgeTooltip : "")
+
+    // RS row (NSE stocks only)
+    [rsFound, rsCur, rsPrv] = f_rs(stockCode)
+    string mySector = isNseStock ? f_sector(stockCode) : ""
+    if showRsInput and isNseStock and visibleBadge
+        color amber = color.rgb(214, 158, 46)
+        string rsText = "RS –"
+        string rsTip = "Not ranked.\nEither this stock is not on the F&O sector list used, or it is excluded (NSE split/bonus/rights ex-date in the 3-month window, or too little price history)."
+        color rsBg = color.new(color.gray, 25)
+        color rsTxt = color.white
+        if rsFound
+            rsText := "RS " + f_arrow(rsPrv, rsCur) + "  " + asofShort + (rsStale ? " ⚠" : "")
+            rsTxt := f_col(rsPrv, rsCur)
+            rsBg := rsStale ? color.new(amber, 25) : color.new(#131722, 10)
+            rsTip := "3M relative strength, percentile 1-99 among F&O stocks (higher = stronger).\nLast week (" + RS_PREV + "): " + (na(rsPrv) ? "not ranked" : str.tostring(rsPrv)) + "\nNow (" + RS_ASOF + "): " + str.tostring(rsCur) + (mySector != "" ? "\nSector: " + mySector : "") + (rsStale ? "\nDATA IS " + str.tostring(dataAgeDays, "#") + " DAYS OLD: refresh the script." : "")
+        table.cell(badge, 0, 1, text = rsText, text_color = rsStale ? color.white : rsTxt, text_size = badgeSize, bgcolor = rsBg, tooltip = rsTip)
+    else
+        table.cell(badge, 0, 1, text = "", bgcolor = color.new(color.white, 100))
+
+    // Sector table
+    if showSectorInput
+        string[] rows = str.split(SEC_DATA, ";")
+        table.cell(sectorTable, 0, 0, text = "Sector RS  (last wk → now)", text_color = color.white, text_size = sectorSize, bgcolor = color.new(#131722, 10), text_halign = text.align_left)
+        table.cell(sectorTable, 1, 0, text = asofShort + (rsStale ? " ⚠" : ""), text_color = rsStale ? color.rgb(214, 158, 46) : color.rgb(170, 170, 170), text_size = sectorSize, bgcolor = color.new(#131722, 10))
+        for i = 0 to array.size(rows) - 1
+            string[] f = str.split(array.get(rows, i), ":")
+            string nm = array.get(f, 0)
+            string[] rv = str.split(array.get(f, 1), ">")
+            int cur = int(str.tonumber(array.get(rv, 0)))
+            string pv = array.get(rv, 1)
+            int prv = pv == "-" ? na : int(str.tonumber(pv))
+            int cnt = int(str.tonumber(array.get(f, 2)))
+            bool mine = nm == mySector
+            color bg = mine ? color.new(color.rgb(41, 98, 255), 35) : color.new(#131722, 25)
+            table.cell(sectorTable, 0, i + 1, text = nm + (cnt <= 2 ? " *" : ""), text_color = color.white, text_size = sectorSize, bgcolor = bg, text_halign = text.align_left, tooltip = str.tostring(cnt) + " ranked stock(s)")
+            table.cell(sectorTable, 1, i + 1, text = f_arrow(prv, cur), text_color = f_col(prv, cur), text_size = sectorSize, bgcolor = bg, text_halign = text.align_right)
+        table.cell(sectorTable, 0, array.size(rows) + 1, text = "* only 1-2 stocks: noisy", text_color = color.rgb(170, 170, 170), text_size = sectorSize, bgcolor = color.new(#131722, 25), text_halign = text.align_left)
+        table.cell(sectorTable, 1, array.size(rows) + 1, text = "", bgcolor = color.new(#131722, 25))
