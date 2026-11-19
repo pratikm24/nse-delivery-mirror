@@ -90,6 +90,7 @@ bool showRsInput = input.bool(true, "Show 3M RS under the badge", group = "RS")
 bool showSectorInput = input.bool(true, "Show sector RS table", group = "RS")
 string sectorCornerInput = input.string("Top right", "Sector table corner", options = ["Top right", "Top left", "Middle right", "Middle left", "Bottom right", "Bottom left"], group = "RS")
 string sectorSizeInput = input.string("Tiny", "Sector table text size", options = ["Tiny", "Small", "Normal"], group = "RS")
+int trendThresholdInput = input.int(10, "RS trend: min weekly change (points)", minval = 1, maxval = 50, group = "RS", tooltip = "Screener column \"RS trend\": 1 = Rising (RS up by at least this many points vs last week), -1 = Falling (down by at least this many), 0 = Stale (smaller change).")
 int staleDaysInput = input.int(9, "Mark RS data stale after (days)", minval = 1, maxval = 60, group = "RS", tooltip = "The ranking is refreshed weekly. Older than this and the RS turns amber.")
 
 string sectorPosition = switch sectorCornerInput
@@ -188,6 +189,8 @@ if barstate.isfirst and isNseStock
 // Screener / data-window outputs (not drawn on the chart pane)
 plot(rsCur, "RS now (1-99)", display = display.data_window + display.status_line)
 plot(rsPrv, "RS last week (1-99)", display = display.data_window + display.status_line)
+float rsTrend = na(rsCur) or na(rsPrv) ? na : (rsCur - rsPrv >= trendThresholdInput ? 1.0 : rsCur - rsPrv <= -trendThresholdInput ? -1.0 : 0.0)
+plot(rsTrend, "RS trend (1 rising, 0 stale, -1 falling)", display = display.data_window + display.status_line)
 plot(rsCur - rsPrv, "RS change", display = display.data_window + display.status_line)
 plot(secCur, "Sector RS now (1-99)", display = display.data_window + display.status_line)
 plot(secPrv, "Sector RS last week (1-99)", display = display.data_window + display.status_line)
