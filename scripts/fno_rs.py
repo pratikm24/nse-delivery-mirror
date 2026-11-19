@@ -182,6 +182,9 @@ def main():
     if not raw:
         raise RuntimeError("corporate actions list came back empty; refusing to publish")
     print("  sample row keys:", sorted(raw[0].keys()) if isinstance(raw[0], dict) else type(raw[0]))
+    allm = [(r.get("symbol"), r.get("exDate"), r.get("subject")) for r in raw
+            if any(w in str(r.get("subject", "")).lower() for w in ACTION_WORDS)]
+    print(f"  keyword matches across ALL NSE stocks: {len(allm)}; first 5: {allm[:5]}")
     actions, audit = {}, []
     for row in raw:
         sym = str(row.get("symbol", "")).strip()
