@@ -6,6 +6,8 @@ keeps a compact price history in fno-rs/closes.json, and writes:
   fno-rs/rs.json       full result per stock (return, percentile, sector rank, flags)
   fno-rs/rs_pine.txt   one line: "asOf|prevAsOf|SYMBOL:current>previous,..." for the Pine script
   (previous = the same ranking as of the last session on/before 7 days earlier)
+  line 2: "Sector:current>previous;..." - sector RS = equal-weight average 3M return of its ranked
+  stocks, percentile 1..99 across sectors
 
 Definition (plain, no assumptions hidden):
   3M return = close on the latest session / close on the last session on or before
@@ -111,6 +113,18 @@ def parse_ex(v):
         except Exception:  # noqa: BLE001
             pass
     return None
+
+
+def sector_rank(rets, sectors):
+    """Sector RS: equal-weight average 3M return of its ranked stocks, percentile 1..99 across sectors."""
+    avg = {}
+    for sec, lst in sectors.items():
+        v = [rets[x] for x in lst if x in rets]
+        if v:
+            avg[sec] = sum(v) / len(v)
+    pct = percentiles(avg)
+    return {sec: {"avg_ret3m": round(avg[sec] * 100, 2), "rs": pct[sec],
+                  "stocks_used": sum(1 for x in sectors[sec] if x in rets)} for sec in avg}
 
 
 def months_back(d, m):
@@ -230,9 +244,12 @@ def main():
     (DIR / "corp_actions.json").write_text(json.dumps(audit, indent=1))
     print(f"corporate actions fetched: {len(raw)} rows; stocks excluded for them: {len(actions)}")
 
+    sec_now = sector_rank(rets, uni["sectors"])
     pres = None
+    sec_prev = {}
     if prev_latest and prev_ref:
-        pres, _, _ = rank(prev_ref, prev_latest)
+        pres, prets, _ = rank(prev_ref, prev_latest)
+        sec_prev = sector_rank(prets, uni["sectors"])
         for s in res:
             res[s]["rs_prev"] = pres[s]["rs"]
     else:
@@ -242,13 +259,16 @@ def main():
 
     out = {"data_date": latest, "ref_date": ref, "prev_data_date": prev_latest, "prev_ref_date": prev_ref,
            "ranked": len(rets), "universe": len(wanted),
+           "sectors": {k: dict(v, rs_prev=(sec_prev.get(k) or {}).get("rs")) for k, v in sec_now.items()},
            "generated": datetime.now(IST).isoformat(timespec="seconds"), "stocks": res}
     (DIR / "rs.json").write_text(json.dumps(out, indent=1))
     parts = []
     for s in sorted(rets):
         pv = res[s]["rs_prev"]
         parts.append(f"{s}:{res[s]['rs']}>{pv if pv is not None else '-'}")
-    (DIR / "rs_pine.txt").write_text(f"{latest}|{prev_latest or '-'}|{','.join(parts)}\n")
+    sec_parts = [f"{k}:{v['rs']}>{(sec_prev.get(k) or {}).get('rs', '-')}"
+                 for k, v in sorted(sec_now.items(), key=lambda kv: -kv[1]["rs"])]
+    (DIR / "rs_pine.txt").write_text(f"{latest}|{prev_latest or '-'}|{','.join(parts)}\n{';'.join(sec_parts)}\n")
     flagged = [s for s, v in res.items() if v["flag"]]
     print(f"data {latest} (base {ref}); previous week {prev_latest} (base {prev_ref}); ranked {len(rets)}/{len(wanted)}; not ranked: {flagged}")
 
