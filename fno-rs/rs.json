@@ -5,7 +5,147 @@
  "prev_ref_date": "2026-08-11",
  "ranked": 217,
  "universe": 218,
- "generated": "2026-11-19T10:04:38+05:30",
+ "sectors": {
+  "General Industrials": {
+   "avg_ret3m": -14.29,
+   "rs": 1,
+   "stocks_used": 18,
+   "rs_prev": 10
+  },
+  "Banking and Finance": {
+   "avg_ret3m": 2.39,
+   "rs": 86,
+   "stocks_used": 52,
+   "rs_prev": 77
+  },
+  "Cement and Construction": {
+   "avg_ret3m": -3.45,
+   "rs": 50,
+   "stocks_used": 8,
+   "rs_prev": 46
+  },
+  "Realty": {
+   "avg_ret3m": 3.73,
+   "rs": 95,
+   "stocks_used": 6,
+   "rs_prev": 81
+  },
+  "FMCG": {
+   "avg_ret3m": -3.59,
+   "rs": 46,
+   "stocks_used": 8,
+   "rs_prev": 41
+  },
+  "Consumer Durables": {
+   "avg_ret3m": -12.42,
+   "rs": 5,
+   "stocks_used": 14,
+   "rs_prev": 1
+  },
+  "Software & Services": {
+   "avg_ret3m": -1.41,
+   "rs": 68,
+   "stocks_used": 15,
+   "rs_prev": 59
+  },
+  "Automobiles & Auto Components": {
+   "avg_ret3m": -2.57,
+   "rs": 54,
+   "stocks_used": 16,
+   "rs_prev": 68
+  },
+  "Oil & Gas": {
+   "avg_ret3m": 1.4,
+   "rs": 81,
+   "stocks_used": 7,
+   "rs_prev": 86
+  },
+  "Utilities": {
+   "avg_ret3m": -3.69,
+   "rs": 41,
+   "stocks_used": 10,
+   "rs_prev": 54
+  },
+  "Metals & Mining": {
+   "avg_ret3m": -6.49,
+   "rs": 14,
+   "stocks_used": 11,
+   "rs_prev": 63
+  },
+  "Retailing": {
+   "avg_ret3m": -5.84,
+   "rs": 19,
+   "stocks_used": 7,
+   "rs_prev": 23
+  },
+  "Diversified": {
+   "avg_ret3m": -2.56,
+   "rs": 59,
+   "stocks_used": 2,
+   "rs_prev": 19
+  },
+  "Telecom Services": {
+   "avg_ret3m": 0.36,
+   "rs": 77,
+   "stocks_used": 3,
+   "rs_prev": 95
+  },
+  "Healthcare": {
+   "avg_ret3m": -1.37,
+   "rs": 72,
+   "stocks_used": 4,
+   "rs_prev": 14
+  },
+  "Chemicals & Petrochemicals": {
+   "avg_ret3m": -5.6,
+   "rs": 23,
+   "stocks_used": 5,
+   "rs_prev": 28
+  },
+  "Pharmaceuticals & Biotechnology": {
+   "avg_ret3m": 6.1,
+   "rs": 99,
+   "stocks_used": 13,
+   "rs_prev": 99
+  },
+  "Textiles Apparels & Accessories": {
+   "avg_ret3m": -5.1,
+   "rs": 28,
+   "stocks_used": 3,
+   "rs_prev": 72
+  },
+  "Hotels Restaurants & Tourism": {
+   "avg_ret3m": 2.9,
+   "rs": 90,
+   "stocks_used": 2,
+   "rs_prev": 90
+  },
+  "Transportation": {
+   "avg_ret3m": -4.21,
+   "rs": 37,
+   "stocks_used": 5,
+   "rs_prev": 50
+  },
+  "Food, Beverages & Tobacco": {
+   "avg_ret3m": -1.67,
+   "rs": 63,
+   "stocks_used": 6,
+   "rs_prev": 37
+  },
+  "Commercial Services & Supplies": {
+   "avg_ret3m": -10.6,
+   "rs": 10,
+   "stocks_used": 1,
+   "rs_prev": 5
+  },
+  "Fertilizers": {
+   "avg_ret3m": -5.03,
+   "rs": 32,
+   "stocks_used": 1,
+   "rs_prev": 32
+  }
+ },
+ "generated": "2026-11-19T10:06:43+05:30",
  "stocks": {
   "360ONE": {
    "sector": "Banking and Finance",
