@@ -28,6 +28,9 @@ jobs:
       - name: Compute RS
         run: python scripts/fno_rs.py
 
+      - name: Build Pine script
+        run: python scripts/make_pine.py
+
       - name: Commit results
         run: |
           git config user.name  "fno-rs-bot"

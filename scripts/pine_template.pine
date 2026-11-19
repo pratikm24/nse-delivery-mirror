@@ -86,7 +86,7 @@ bool detected = isDerivativeChart or liveFeed
 // ----- RS / sector settings -----
 bool showRsInput = input.bool(true, "Show 3M RS under the badge", group = "RS")
 bool showSectorInput = input.bool(true, "Show sector RS table", group = "RS")
-string sectorCornerInput = input.string("Bottom right", "Sector table corner", options = ["Top right", "Top left", "Middle right", "Middle left", "Bottom right", "Bottom left"], group = "RS")
+string sectorCornerInput = input.string("Top right", "Sector table corner", options = ["Top right", "Top left", "Middle right", "Middle left", "Bottom right", "Bottom left"], group = "RS")
 string sectorSizeInput = input.string("Tiny", "Sector table text size", options = ["Tiny", "Small", "Normal"], group = "RS")
 int staleDaysInput = input.int(9, "Mark RS data stale after (days)", minval = 1, maxval = 60, group = "RS", tooltip = "The ranking is refreshed weekly. Older than this and the RS turns amber.")
 
