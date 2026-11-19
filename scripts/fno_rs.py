@@ -11,8 +11,10 @@ Definition (plain, no assumptions hidden):
               (latest date minus 3 calendar months) - 1
   RS        = percentile 1..99 of that return among eligible F&O stocks
               (lowest return = 1, highest = 99, ties share the average rank)
-  A stock is NOT ranked ("n/a") when any one-day close move in the window is below -35%
-  or above +60% (likely split/bonus; NSE closes are unadjusted), or when price data is missing.
+  NSE closes are unadjusted, so a stock is NOT ranked ("n/a") only when NSE's own corporate-actions
+  list shows a split / bonus / consolidation / demerger / arrangement / rights ex-date inside the
+  window, or when price data is missing. Price moves alone never cause an exclusion.
+  If the corporate-actions list cannot be fetched, the job stops and publishes nothing.
 This script does not touch the 52W tracker's files (delivery/).
 """
 import json, os, pathlib, sys, time, urllib.error, urllib.request
@@ -22,7 +24,8 @@ IST = timezone(timedelta(hours=5, minutes=30))
 BASE = "https://nsearchives.nseindia.com/products/content/sec_bhavdata_full_"
 DIR = pathlib.Path("fno-rs")
 LOOKBACK_DAYS = int(os.environ.get("LOOKBACK_DAYS", "105"))   # ~3 months + buffer for holidays
-DROP_LIMIT, JUMP_LIMIT = -0.35, 0.60
+ACTION_WORDS = ("split", "sub-division", "subdivision", "bonus", "consolidation", "demerger",
+                "arrangement", "rights", "capital reduction")
 HEADERS = {
     "User-Agent": ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
                    "(KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36"),
@@ -68,6 +71,45 @@ def parse_closes(text, wanted):
         except ValueError:
             pass
     return out
+
+
+def fetch_corp_actions(frm, to):
+    """NSE corporate actions (equities) with ex-date in [frm, to]. Raises on any failure."""
+    import http.cookiejar
+    jar = http.cookiejar.CookieJar()
+    op = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(jar))
+    hdr = dict(HEADERS); hdr["Accept"] = "application/json,text/plain,*/*"
+    for warm in ("https://www.nseindia.com/", "https://www.nseindia.com/companies-listing/corporate-filings-actions"):
+        try:
+            op.open(urllib.request.Request(warm, headers=hdr), timeout=30).read()
+        except Exception as e:  # noqa: BLE001
+            print("  warm-up:", type(e).__name__, e)
+    url = ("https://www.nseindia.com/api/corporates-corporateActions?index=equities"
+           f"&from_date={frm.strftime('%d-%m-%Y')}&to_date={to.strftime('%d-%m-%Y')}")
+    hdr["Referer"] = "https://www.nseindia.com/companies-listing/corporate-filings-actions"
+    last = ""
+    for i in range(4):
+        try:
+            body = op.open(urllib.request.Request(url, headers=hdr), timeout=60).read().decode("utf-8", "replace")
+            data = json.loads(body)
+            if isinstance(data, dict):
+                data = data.get("data", [])
+            if not isinstance(data, list):
+                raise ValueError("unexpected shape")
+            return data
+        except Exception as e:  # noqa: BLE001
+            last = type(e).__name__ + ": " + str(e)
+            time.sleep(4 * (i + 1))
+    raise RuntimeError("corporate actions fetch failed: " + last)
+
+
+def parse_ex(v):
+    for fmt in ("%d-%b-%Y", "%d-%m-%Y", "%Y-%m-%d"):
+        try:
+            return datetime.strptime(v.strip(), fmt).date()
+        except Exception:  # noqa: BLE001
+            pass
+    return None
 
 
 def months_back(d, m):
@@ -136,6 +178,21 @@ def main():
     ref = ref_days[-1]
     window = [x for x in days if ref <= x <= latest]
 
+    raw = fetch_corp_actions(date.fromisoformat(ref), date.fromisoformat(latest))
+    if not raw:
+        raise RuntimeError("corporate actions list came back empty; refusing to publish")
+    print("  sample row keys:", sorted(raw[0].keys()) if isinstance(raw[0], dict) else type(raw[0]))
+    actions, audit = {}, []
+    for row in raw:
+        sym = str(row.get("symbol", "")).strip()
+        subj = str(row.get("subject") or row.get("purpose") or "")
+        exd = parse_ex(str(row.get("exDate") or row.get("exdate") or ""))
+        if sym in wanted and exd and ref <= exd.isoformat() <= latest and any(w in subj.lower() for w in ACTION_WORDS):
+            actions.setdefault(sym, []).append(f"{exd.isoformat()}: {subj}")
+            audit.append({"symbol": sym, "ex_date": exd.isoformat(), "subject": subj})
+    print(f"corporate actions fetched: {len(raw)} rows; relevant to universe in window: {len(audit)}")
+    (DIR / "corp_actions.json").write_text(json.dumps(audit, indent=1))
+
     res, rets = {}, {}
     for s in sorted(wanted):
         c0, c1 = closes[ref].get(s), closes[latest].get(s)
@@ -145,16 +202,8 @@ def main():
         else:
             ret = c1 / c0 - 1
             info["ret3m"] = round(ret * 100, 2)
-            prev, bad = None, None
-            for x in window:
-                c = closes[x].get(s)
-                if c is None:
-                    continue
-                if prev is not None and (c / prev - 1 < DROP_LIMIT or c / prev - 1 > JUMP_LIMIT):
-                    bad = f"{x}: {round((c / prev - 1) * 100, 1)}% in one day (possible split/bonus)"
-                prev = c
-            if bad:
-                info["flag"] = bad
+            if s in actions:
+                info["flag"] = "; ".join(actions[s])
             else:
                 rets[s] = ret
         res[s] = info
