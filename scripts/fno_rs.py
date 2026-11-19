@@ -4,7 +4,8 @@
 Reads fno-rs/universe.json, downloads NSE's daily full bhavcopy (closing prices),
 keeps a compact price history in fno-rs/closes.json, and writes:
   fno-rs/rs.json       full result per stock (return, percentile, sector rank, flags)
-  fno-rs/rs_pine.txt   one line, "SYMBOL:percentile,..." plus the data date, for the Pine script
+  fno-rs/rs_pine.txt   one line: "asOf|prevAsOf|SYMBOL:current>previous,..." for the Pine script
+  (previous = the same ranking as of the last session on/before 7 days earlier)
 
 Definition (plain, no assumptions hidden):
   3M return = close on the latest session / close on the last session on or before
@@ -23,7 +24,7 @@ from datetime import datetime, timedelta, timezone, date
 IST = timezone(timedelta(hours=5, minutes=30))
 BASE = "https://nsearchives.nseindia.com/products/content/sec_bhavdata_full_"
 DIR = pathlib.Path("fno-rs")
-LOOKBACK_DAYS = int(os.environ.get("LOOKBACK_DAYS", "105"))   # ~3 months + buffer for holidays
+LOOKBACK_DAYS = int(os.environ.get("LOOKBACK_DAYS", "120"))   # ~3 months + buffer for holidays
 ACTION_WORDS = ("split", "sub-division", "subdivision", "bonus", "consolidation", "demerger",
                 "arrangement", "rights", "capital reduction")
 HEADERS = {
@@ -178,54 +179,78 @@ def main():
     ref = ref_days[-1]
     window = [x for x in days if ref <= x <= latest]
 
-    raw = fetch_corp_actions(date.fromisoformat(ref), date.fromisoformat(latest))
+    # previous week: last session on/before (latest - 7 days), its own 3M base date
+    prev_target = (date.fromisoformat(latest) - timedelta(days=7)).isoformat()
+    prev_days = [x for x in days if x <= prev_target]
+    prev_latest = prev_days[-1] if prev_days else None
+    prev_ref = None
+    if prev_latest:
+        pr = [x for x in days if x <= months_back(date.fromisoformat(prev_latest), 3).isoformat()]
+        prev_ref = pr[-1] if pr else None
+
+    earliest = prev_ref or ref
+    raw = fetch_corp_actions(date.fromisoformat(earliest), date.fromisoformat(latest))
     if not raw:
         raise RuntimeError("corporate actions list came back empty; refusing to publish")
     print("  sample row keys:", sorted(raw[0].keys()) if isinstance(raw[0], dict) else type(raw[0]))
-    allm = [(r.get("symbol"), r.get("exDate"), r.get("subject")) for r in raw
-            if any(w in str(r.get("subject", "")).lower() for w in ACTION_WORDS)]
-    print(f"  keyword matches across ALL NSE stocks: {len(allm)}; first 5: {allm[:5]}")
-    actions, audit = {}, []
-    for row in raw:
-        sym = str(row.get("symbol", "")).strip()
-        subj = str(row.get("subject") or row.get("purpose") or "")
-        exd = parse_ex(str(row.get("exDate") or row.get("exdate") or ""))
-        if sym in wanted and exd and ref <= exd.isoformat() <= latest and any(w in subj.lower() for w in ACTION_WORDS):
-            actions.setdefault(sym, []).append(f"{exd.isoformat()}: {subj}")
-            audit.append({"symbol": sym, "ex_date": exd.isoformat(), "subject": subj})
-    print(f"corporate actions fetched: {len(raw)} rows; relevant to universe in window: {len(audit)}")
-    (DIR / "corp_actions.json").write_text(json.dumps(audit, indent=1))
 
-    res, rets = {}, {}
-    for s in sorted(wanted):
-        c0, c1 = closes[ref].get(s), closes[latest].get(s)
-        info = {"sector": sector_of[s], "ret3m": None, "rs": None, "sector_rs": None, "flag": None}
-        if c0 is None or c1 is None:
-            info["flag"] = "no price data"
-        else:
-            ret = c1 / c0 - 1
-            info["ret3m"] = round(ret * 100, 2)
-            if s in actions:
-                info["flag"] = "; ".join(actions[s])
+    def rank(ref_d, latest_d):
+        """Rank the universe for one (base date, as-of date) pair."""
+        actions = {}
+        for row in raw:
+            sym = str(row.get("symbol", "")).strip()
+            subj = str(row.get("subject") or row.get("purpose") or "")
+            exd = parse_ex(str(row.get("exDate") or row.get("exdate") or ""))
+            if sym in wanted and exd and ref_d <= exd.isoformat() <= latest_d and any(w in subj.lower() for w in ACTION_WORDS):
+                actions.setdefault(sym, []).append(f"{exd.isoformat()}: {subj}")
+        res, rets = {}, {}
+        for s in sorted(wanted):
+            c0, c1 = closes[ref_d].get(s), closes[latest_d].get(s)
+            info = {"sector": sector_of[s], "ret3m": None, "rs": None, "sector_rs": None, "flag": None}
+            if c0 is None or c1 is None:
+                info["flag"] = "no price data"
             else:
-                rets[s] = ret
-        res[s] = info
+                ret = c1 / c0 - 1
+                info["ret3m"] = round(ret * 100, 2)
+                if s in actions:
+                    info["flag"] = "; ".join(actions[s])
+                else:
+                    rets[s] = ret
+            res[s] = info
+        for s, p in percentiles(rets).items():
+            res[s]["rs"] = p
+        for sec in uni["sectors"]:
+            grp = {s: rets[s] for s in uni["sectors"][sec] if s in rets}
+            for s, p in percentiles(grp).items():
+                res[s]["sector_rs"] = p
+        return res, rets, actions
 
-    pct = percentiles(rets)
-    for s, p in pct.items():
-        res[s]["rs"] = p
-    for sec in uni["sectors"]:
-        grp = {s: rets[s] for s in uni["sectors"][sec] if s in rets}
-        for s, p in percentiles(grp).items():
-            res[s]["sector_rs"] = p
+    res, rets, actions = rank(ref, latest)
+    audit = [{"symbol": s, "events": v} for s, v in sorted(actions.items())]
+    (DIR / "corp_actions.json").write_text(json.dumps(audit, indent=1))
+    print(f"corporate actions fetched: {len(raw)} rows; stocks excluded for them: {len(actions)}")
 
-    out = {"data_date": latest, "ref_date": ref, "ranked": len(rets), "universe": len(wanted),
+    pres = None
+    if prev_latest and prev_ref:
+        pres, _, _ = rank(prev_ref, prev_latest)
+        for s in res:
+            res[s]["rs_prev"] = pres[s]["rs"]
+    else:
+        print("  previous-week RS unavailable: history too short")
+        for s in res:
+            res[s]["rs_prev"] = None
+
+    out = {"data_date": latest, "ref_date": ref, "prev_data_date": prev_latest, "prev_ref_date": prev_ref,
+           "ranked": len(rets), "universe": len(wanted),
            "generated": datetime.now(IST).isoformat(timespec="seconds"), "stocks": res}
     (DIR / "rs.json").write_text(json.dumps(out, indent=1))
-    pine = ",".join(f"{s}:{res[s]['rs']}" for s in sorted(rets))
-    (DIR / "rs_pine.txt").write_text(f"{latest}|{pine}\n")
+    parts = []
+    for s in sorted(rets):
+        pv = res[s]["rs_prev"]
+        parts.append(f"{s}:{res[s]['rs']}>{pv if pv is not None else '-'}")
+    (DIR / "rs_pine.txt").write_text(f"{latest}|{prev_latest or '-'}|{','.join(parts)}\n")
     flagged = [s for s, v in res.items() if v["flag"]]
-    print(f"data {latest}, base {ref}, ranked {len(rets)}/{len(wanted)}; not ranked: {flagged}")
+    print(f"data {latest} (base {ref}); previous week {prev_latest} (base {prev_ref}); ranked {len(rets)}/{len(wanted)}; not ranked: {flagged}")
 
 
 if __name__ == "__main__":
