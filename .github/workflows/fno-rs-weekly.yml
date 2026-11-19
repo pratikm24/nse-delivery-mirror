@@ -1,0 +1,42 @@
+name: F&O 3M RS (weekly)
+
+# Separate from the 52W tracker's workflow. Writes only to fno-rs/.
+# Saturday 09:00 IST (03:30 UTC), after Friday's close. Run by hand any time from the Actions tab.
+
+on:
+  schedule:
+    - cron: "30 3 * * 6"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: fno-rs
+  cancel-in-progress: false
+
+jobs:
+  rs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Compute RS
+        run: python scripts/fno_rs.py
+
+      - name: Commit results
+        run: |
+          git config user.name  "fno-rs-bot"
+          git config user.email "fno-rs-bot@users.noreply.github.com"
+          git add fno-rs
+          if git diff --cached --quiet; then
+            echo "No change."
+          else
+            git commit -m "F&O RS: $(date -u +%Y-%m-%d)"
+            git pull --rebase
+            git push
+          fi
