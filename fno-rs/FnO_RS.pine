@@ -14,6 +14,8 @@ indicator("India FnO Badge + RS", shorttitle = "FnO RS", overlay = true, dynamic
 //
 // SECTOR TABLE (new, toggle in settings)
 // Sector RS = equal-weight average 3M return of the sector's ranked stocks, percentile 1-99 across sectors.
+// PINE SCREENER: the script outputs plots (RS now, RS last week, RS change, sector RS now/last week/change)
+// so it can be used as a screener filter. Plots are hidden from the chart pane (Data Window / status line only).
 // Generated 2026-11-19 | stock data as of 2026-11-18 (previous week: 2026-11-11)
 
 f_ist(int t) =>
@@ -152,6 +154,45 @@ f_arrow(int prv, int cur) =>
 f_col(int prv, int cur) =>
     na(prv) or na(cur) ? color.white : cur > prv ? color.rgb(76, 217, 130) : cur < prv ? color.rgb(255, 107, 107) : color.white
 
+f_secval(string name) =>
+    int cur = na
+    int prv = na
+    if name != ""
+        string[] rows = str.split(SEC_DATA, ";")
+        for r in rows
+            string[] f = str.split(r, ":")
+            if array.get(f, 0) == name
+                string[] rv = str.split(array.get(f, 1), ">")
+                cur := int(str.tonumber(array.get(rv, 0)))
+                string pv = array.get(rv, 1)
+                prv := pv == "-" ? na : int(str.tonumber(pv))
+    [cur, prv]
+
+// Computed once per symbol (the symbol does not change across bars).
+var bool rsFound = false
+var int rsCur = na
+var int rsPrv = na
+var string mySector = ""
+var int secCur = na
+var int secPrv = na
+if barstate.isfirst and isNseStock
+    [fT, cT, pT] = f_rs(stockCode)
+    rsFound := fT
+    rsCur := cT
+    rsPrv := pT
+    mySector := f_sector(stockCode)
+    [sC, sP] = f_secval(mySector)
+    secCur := sC
+    secPrv := sP
+
+// Screener / data-window outputs (not drawn on the chart pane)
+plot(rsCur, "RS now (1-99)", display = display.data_window + display.status_line)
+plot(rsPrv, "RS last week (1-99)", display = display.data_window + display.status_line)
+plot(rsCur - rsPrv, "RS change", display = display.data_window + display.status_line)
+plot(secCur, "Sector RS now (1-99)", display = display.data_window + display.status_line)
+plot(secPrv, "Sector RS last week (1-99)", display = display.data_window + display.status_line)
+plot(secCur - secPrv, "Sector RS change", display = display.data_window + display.status_line)
+
 int asofTs = timestamp("Asia/Kolkata", int(str.tonumber(str.substring(RS_ASOF, 0, 4))), int(str.tonumber(str.substring(RS_ASOF, 5, 7))), int(str.tonumber(str.substring(RS_ASOF, 8, 10))), 15, 30)
 float dataAgeDays = (timenow - asofTs) / 86400000.0
 bool rsStale = dataAgeDays > staleDaysInput
@@ -175,8 +216,6 @@ if barstate.islast
     table.cell(badge, 0, 0, text = visibleBadge ? badgeText : "", text_color = color.white, text_size = badgeSize, bgcolor = visibleBadge ? (detected ? badgeColorInput : color.new(color.gray, 25)) : color.new(color.white, 100), tooltip = visibleBadge ? badgeTooltip : "")
 
     // RS row (NSE stocks only)
-    [rsFound, rsCur, rsPrv] = f_rs(stockCode)
-    string mySector = isNseStock ? f_sector(stockCode) : ""
     if showRsInput and isNseStock and visibleBadge
         color amber = color.rgb(214, 158, 46)
         string rsText = "RS –"
