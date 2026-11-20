@@ -1,5 +1,5 @@
 //@version=6
-indicator("India FnO Badge + RS", shorttitle = "FnO RS", overlay = true, dynamic_requests = true, max_labels_count = 500)
+indicator("India FnO Badge + RS", shorttitle = "FnO RS", overlay = true, dynamic_requests = true)
 
 // FnO BADGE (unchanged logic from v2.0)
 // Marks a chart "FnO" when TradingView has a LIVE futures feed for it (one request, no stock list).
@@ -11,10 +11,6 @@ indicator("India FnO Badge + RS", shorttitle = "FnO RS", overlay = true, dynamic
 // A stock is unranked only if NSE lists a split/bonus/consolidation/demerger/arrangement/rights ex-date
 // in the window, or it has no price history. Ranking data is computed weekly by a GitHub job and
 // written into this script (Pine cannot download data). It turns amber when older than the limit below.
-//
-// BIG-MOVE MARKER (new, settings group "Big moves")
-// Marks candles whose close is up/down by at least the set % versus the previous close (on the chart's
-// own timeframe): a small dot above (up) or below (down). Optionally the dot becomes a small % tag.
 //
 // SECTOR TABLE (new, toggle in settings)
 // Sector RS = equal-weight average 3M return of the sector's ranked stocks, percentile 1-99 across sectors.
@@ -88,16 +84,6 @@ bool hasFeed = not na(fClose) and not na(fTime)
 float ageDays = hasFeed ? (timenow - fTime) / 86400000.0 : na
 bool liveFeed = hasFeed and ageDays <= maxAgeInput
 bool detected = isDerivativeChart or liveFeed
-
-// ----- Big-move marker -----
-bool moveMarkInput = input.bool(true, "Mark big candles", group = "Big moves")
-float moveThreshInput = input.float(12.0, "Min % move vs previous close", minval = 1.0, step = 0.5, group = "Big moves", tooltip = "A candle is marked when its close is up or down by at least this % versus the previous candle's close, on the chart's current timeframe.")
-float movePct = (close / close[1] - 1) * 100
-bool bigUp = moveMarkInput and movePct >= moveThreshInput
-bool bigDn = moveMarkInput and movePct <= -moveThreshInput
-plotshape(bigUp, "Big up candle", shape.circle, location.abovebar, color.rgb(76, 217, 130), size = size.tiny)
-plotshape(bigDn, "Big down candle", shape.circle, location.belowbar, color.rgb(255, 107, 107), size = size.tiny)
-plot(movePct, "Candle % move vs previous close", display = display.data_window + display.status_line)
 
 // ----- Index benchmark: 3M return vs a market-cap-based index -----
 bool showRelInput = input.bool(true, "Show 3M return vs index under the RS", group = "Index benchmark")
