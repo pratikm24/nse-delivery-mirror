@@ -122,7 +122,7 @@ if barstate.islast and isNseStock and showRelInput
 // The 3-month-ago closes come from daily data, so they do not depend on the chart timeframe. Requests sit at the top level so they run on every bar
 // (the index symbol is only filled in on the last bar).
 string idxReqSym = benchSym == "" ? syminfo.tickerid : benchSym
-float idxNow = request.security(idxReqSym, timeframe.period, close, ignore_invalid_symbol = true, calc_bars_count = 300)
+float idxNow = request.security(idxReqSym, timeframe.period, close, lookahead = barmerge.lookahead_on, ignore_invalid_symbol = true, calc_bars_count = 300)
 float stkRef = request.security(syminfo.tickerid, "D", ta.valuewhen(time <= refT, close, 0), lookahead = barmerge.lookahead_on, ignore_invalid_symbol = true, calc_bars_count = 300)
 float idxRef = request.security(idxReqSym, "D", ta.valuewhen(time <= refT, close, 0), lookahead = barmerge.lookahead_on, ignore_invalid_symbol = true, calc_bars_count = 300)
 if barstate.islast and benchSym != ""
