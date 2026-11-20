@@ -118,12 +118,12 @@ var float relPts = na
 if barstate.islast and isNseStock and showRelInput
     capCr := syminfo.shares_outstanding_total * close / 10000000.0
     benchSym := na(capCr) ? "" : capCr >= largeMinCrInput ? idxLargeInput : capCr >= midMinCrInput ? idxMidInput : idxSmallInput
-// Requests sit at the top level so they are calculated on every bar (the index symbol is only filled in on the last bar).
-[sC, sC0] = request.security(syminfo.tickerid, "D", [close, ta.valuewhen(time <= refT, close, 0)], ignore_invalid_symbol = true, calc_bars_count = 300)
-[iC, iC0] = request.security(benchSym == "" ? syminfo.tickerid : benchSym, "D", [close, ta.valuewhen(time <= refT, close, 0)], ignore_invalid_symbol = true, calc_bars_count = 300)
+// Both requests use the latest daily value (lookahead on) so the stock and the index are always compared on the same latest day. Requests sit at the top level so they are calculated on every bar (the index symbol is only filled in on the last bar).
+[stkC, stkC0] = request.security(syminfo.tickerid, "D", [close, ta.valuewhen(time <= refT, close, 0)], lookahead = barmerge.lookahead_on, ignore_invalid_symbol = true, calc_bars_count = 300)
+[idxC, idxC0] = request.security(benchSym == "" ? syminfo.tickerid : benchSym, "D", [close, ta.valuewhen(time <= refT, close, 0)], lookahead = barmerge.lookahead_on, ignore_invalid_symbol = true, calc_bars_count = 300)
 if barstate.islast and benchSym != ""
-    stkRet := (sC / sC0 - 1) * 100
-    idxRet := (iC / iC0 - 1) * 100
+    stkRet := (stkC / stkC0 - 1) * 100
+    idxRet := (idxC / idxC0 - 1) * 100
     relPts := stkRet - idxRet
 plot(relPts, "3M return vs index (pts)", display = display.data_window + display.status_line)
 
