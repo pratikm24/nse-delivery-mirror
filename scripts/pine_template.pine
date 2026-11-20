@@ -92,14 +92,39 @@ bool detected = isDerivativeChart or liveFeed
 // ----- Big-move marker -----
 bool moveMarkInput = input.bool(true, "Mark big candles", group = "Big moves")
 float moveThreshInput = input.float(12.0, "Min % move vs previous close", minval = 1.0, step = 0.5, group = "Big moves", tooltip = "A candle is marked when its close is up or down by at least this % versus the previous candle's close, on the chart's current timeframe.")
-bool movePctInput = input.bool(true, "Show the % on marked candles", group = "Big moves", tooltip = "On: each marked candle gets a small tag such as +21% (green up, red down) instead of a dot. Off: dot only.")
+bool movePctInput = input.bool(true, "Show the % inside big candles", group = "Big moves", tooltip = "On: the % is written in tiny text at the middle of each marked candle (no box, no arrow). Off: a small dot above or below the candle instead.")
+color moveTextInput = input.color(color.black, "% text colour", group = "Big moves", tooltip = "Pick a colour that reads on your chart background and on the candle colours. Black suits a light chart, white suits a dark one.")
 float movePct = (close / close[1] - 1) * 100
 bool bigUp = moveMarkInput and movePct >= moveThreshInput
 bool bigDn = moveMarkInput and movePct <= -moveThreshInput
 plotshape(bigUp and not movePctInput, "Big up candle", shape.circle, location.abovebar, color.rgb(76, 217, 130), size = size.tiny)
 plotshape(bigDn and not movePctInput, "Big down candle", shape.circle, location.belowbar, color.rgb(255, 107, 107), size = size.tiny)
 if (bigUp or bigDn) and movePctInput
-    label.new(bar_index, bigUp ? high : low, (movePct > 0 ? "+" : "") + str.tostring(movePct, "#.#") + "%", style = bigUp ? label.style_label_down : label.style_label_up, color = bigUp ? color.new(color.rgb(22, 128, 72), 10) : color.new(color.rgb(200, 50, 50), 10), textcolor = color.white, size = size.tiny)
+    label.new(bar_index, (open + close) / 2, (movePct > 0 ? "+" : "") + str.tostring(movePct, "#") + "%", style = label.style_none, textcolor = moveTextInput, size = size.tiny)
+
+// ----- Index benchmark: 3M return vs a market-cap-based index -----
+bool showRelInput = input.bool(true, "Show 3M return vs index under the RS", group = "Index benchmark")
+float midMinCrInput = input.float(10000, "Mid-cap starts at market cap (Rs crore)", minval = 0, group = "Index benchmark", tooltip = "Market cap below this uses the small-cap index (this includes stocks under 800 crore).")
+float largeMinCrInput = input.float(50000, "Large-cap starts at market cap (Rs crore)", minval = 0, group = "Index benchmark")
+string idxSmallInput = input.string("NSE:NIFTYSMLCAP250", "Index for small caps", group = "Index benchmark", tooltip = "Type any TradingView index symbol, e.g. NSE:CNXSMALLCAP (Smallcap 100). To use one index for everything, type the same symbol in all three boxes.")
+string idxMidInput = input.string("NSE:CNXMIDCAP", "Index for mid caps", group = "Index benchmark")
+string idxLargeInput = input.string("NSE:CNX500", "Index for large caps", group = "Index benchmark")
+int refT = timestamp("Asia/Kolkata", year(timenow, "Asia/Kolkata"), month(timenow, "Asia/Kolkata") - 3, dayofmonth(timenow, "Asia/Kolkata"), 0, 0)
+var float capCr = na
+var string benchSym = ""
+var float stkRet = na
+var float idxRet = na
+var float relPts = na
+if barstate.islast and isNseStock and showRelInput
+    capCr := syminfo.shares_outstanding_total * close / 10000000.0
+    benchSym := na(capCr) ? "" : capCr >= largeMinCrInput ? idxLargeInput : capCr >= midMinCrInput ? idxMidInput : idxSmallInput
+    if benchSym != ""
+        [sC, sC0] = request.security(syminfo.tickerid, "D", [close, ta.valuewhen(time <= refT, close, 0)], ignore_invalid_symbol = true, calc_bars_count = 200)
+        [iC, iC0] = request.security(benchSym, "D", [close, ta.valuewhen(time <= refT, close, 0)], ignore_invalid_symbol = true, calc_bars_count = 200)
+        stkRet := (sC / sC0 - 1) * 100
+        idxRet := (iC / iC0 - 1) * 100
+        relPts := stkRet - idxRet
+plot(relPts, "3M return vs index (pts)", display = display.data_window + display.status_line)
 
 // ----- RS / sector settings -----
 bool showRsInput = input.bool(true, "Show 3M RS under the badge", group = "RS")
@@ -210,7 +235,7 @@ float dataAgeDays = (timenow - asofTs) / 86400000.0
 bool rsStale = dataAgeDays > staleDaysInput
 string asofShort = str.format_time(asofTs, "dd MMM", "Asia/Kolkata")
 
-var table badge = table.new(badgePosition, 1, 2, force_overlay = true)
+var table badge = table.new(badgePosition, 1, 3, force_overlay = true)
 var table sectorTable = showSectorInput ? table.new(sectorPosition, 2, __NROWS__, force_overlay = true) : na
 
 if barstate.islast
@@ -242,6 +267,29 @@ if barstate.islast
         table.cell(badge, 0, 1, text = rsText, text_color = rsStale ? color.white : rsTxt, text_size = badgeSize, bgcolor = rsBg, tooltip = rsTip)
     else
         table.cell(badge, 0, 1, text = "", bgcolor = color.new(color.white, 100))
+
+    // Index-relative row (NSE stocks only)
+    if showRelInput and isNseStock and visibleBadge
+        string relText = ""
+        string relTip = ""
+        color relBg = color.new(color.white, 100)
+        color relTxt = color.white
+        if na(capCr)
+            relText := "vs idx –"
+            relTip := "Market cap is not available on TradingView for this stock, so no benchmark index could be chosen."
+            relBg := color.new(color.gray, 25)
+        else if not na(relPts)
+            relText := "vs idx " + (relPts >= 0 ? "+" : "") + str.tostring(relPts, "#.#")
+            relTxt := relPts >= 0 ? color.rgb(76, 217, 130) : color.rgb(255, 107, 107)
+            relBg := color.new(#131722, 10)
+            relTip := "3M return vs benchmark index, in percentage points (stock minus index).\nStock 3M: " + str.tostring(stkRet, "#.#") + "%   Index 3M: " + str.tostring(idxRet, "#.#") + "%\nIndex used: " + benchSym + "\nMarket cap: about Rs " + str.tostring(capCr, "#,###") + " crore (shares outstanding x price)"
+        else
+            relText := "vs idx –"
+            relTip := "Index data not found for " + benchSym + ". Check the symbol in settings."
+            relBg := color.new(color.gray, 25)
+        table.cell(badge, 0, 2, text = relText, text_color = relTxt, text_size = badgeSize, bgcolor = relBg, tooltip = relTip)
+    else
+        table.cell(badge, 0, 2, text = "", bgcolor = color.new(color.white, 100))
 
     // Sector table
     if showSectorInput
