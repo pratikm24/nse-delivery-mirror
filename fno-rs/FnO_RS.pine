@@ -118,12 +118,16 @@ var float relPts = na
 if barstate.islast and isNseStock and showRelInput
     capCr := syminfo.shares_outstanding_total * close / 10000000.0
     benchSym := na(capCr) ? "" : capCr >= largeMinCrInput ? idxLargeInput : capCr >= midMinCrInput ? idxMidInput : idxSmallInput
-// Both requests use the latest daily value (lookahead on) so the stock and the index are always compared on the same latest day. Requests sit at the top level so they are calculated on every bar (the index symbol is only filled in on the last bar).
-[stkC, stkC0] = request.security(syminfo.tickerid, "D", [close, ta.valuewhen(time <= refT, close, 0)], lookahead = barmerge.lookahead_on, ignore_invalid_symbol = true, calc_bars_count = 300)
-[idxC, idxC0] = request.security(benchSym == "" ? syminfo.tickerid : benchSym, "D", [close, ta.valuewhen(time <= refT, close, 0)], lookahead = barmerge.lookahead_on, ignore_invalid_symbol = true, calc_bars_count = 300)
+// Latest prices come from the chart's own last bar (stock) and the index on the same chart timeframe, so both are the latest close on any timeframe.
+// The 3-month-ago closes come from daily data, so they do not depend on the chart timeframe. Requests sit at the top level so they run on every bar
+// (the index symbol is only filled in on the last bar).
+string idxReqSym = benchSym == "" ? syminfo.tickerid : benchSym
+float idxNow = request.security(idxReqSym, timeframe.period, close, ignore_invalid_symbol = true, calc_bars_count = 300)
+float stkRef = request.security(syminfo.tickerid, "D", ta.valuewhen(time <= refT, close, 0), lookahead = barmerge.lookahead_on, ignore_invalid_symbol = true, calc_bars_count = 300)
+float idxRef = request.security(idxReqSym, "D", ta.valuewhen(time <= refT, close, 0), lookahead = barmerge.lookahead_on, ignore_invalid_symbol = true, calc_bars_count = 300)
 if barstate.islast and benchSym != ""
-    stkRet := (stkC / stkC0 - 1) * 100
-    idxRet := (idxC / idxC0 - 1) * 100
+    stkRet := (close / stkRef - 1) * 100
+    idxRet := (idxNow / idxRef - 1) * 100
     relPts := stkRet - idxRet
 plot(relPts, "3M return vs index (pts)", display = display.data_window + display.status_line)
 
