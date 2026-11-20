@@ -92,16 +92,12 @@ bool detected = isDerivativeChart or liveFeed
 // ----- Big-move marker -----
 bool moveMarkInput = input.bool(true, "Mark big candles", group = "Big moves")
 float moveThreshInput = input.float(12.0, "Min % move vs previous close", minval = 1.0, step = 0.5, group = "Big moves", tooltip = "A candle is marked when its close is up or down by at least this % versus the previous candle's close, on the chart's current timeframe.")
-bool movePctInput = input.bool(true, "Show the % inside big candles", group = "Big moves", tooltip = "On: the % is written in tiny text at the middle of each marked candle (no box, no arrow). Off: a small dot above or below the candle instead.")
-string moveSizeInput = input.string("Normal", "% text size", options = ["Small", "Normal", "Large", "Huge"], group = "Big moves", tooltip = "Size of the % written inside big candles.")
-color moveTextInput = input.color(color.black, "% text colour", group = "Big moves", tooltip = "Pick a colour that reads on your chart background and on the candle colours. Black suits a light chart, white suits a dark one.")
 float movePct = (close / close[1] - 1) * 100
 bool bigUp = moveMarkInput and movePct >= moveThreshInput
 bool bigDn = moveMarkInput and movePct <= -moveThreshInput
-plotshape(bigUp and not movePctInput, "Big up candle", shape.circle, location.abovebar, color.rgb(76, 217, 130), size = size.tiny)
-plotshape(bigDn and not movePctInput, "Big down candle", shape.circle, location.belowbar, color.rgb(255, 107, 107), size = size.tiny)
-if (bigUp or bigDn) and movePctInput
-    label.new(bar_index, (open + close) / 2, (movePct > 0 ? "+" : "") + str.tostring(movePct, "#") + "%", style = label.style_none, textcolor = moveTextInput, size = moveSizeInput == "Small" ? size.small : moveSizeInput == "Large" ? size.large : moveSizeInput == "Huge" ? size.huge : size.normal, text_formatting = text.format_bold)
+plotshape(bigUp, "Big up candle", shape.circle, location.abovebar, color.rgb(76, 217, 130), size = size.tiny)
+plotshape(bigDn, "Big down candle", shape.circle, location.belowbar, color.rgb(255, 107, 107), size = size.tiny)
+plot(movePct, "Candle % move vs previous close", display = display.data_window + display.status_line)
 
 // ----- Index benchmark: 3M return vs a market-cap-based index -----
 bool showRelInput = input.bool(true, "Show 3M return vs index under the RS", group = "Index benchmark")
