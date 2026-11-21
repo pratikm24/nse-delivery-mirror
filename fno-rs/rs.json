@@ -1,611 +1,611 @@
 {
- "data_date": "2026-11-18",
- "ref_date": "2026-08-18",
- "prev_data_date": "2026-11-11",
- "prev_ref_date": "2026-08-11",
+ "data_date": "2026-11-20",
+ "ref_date": "2026-08-20",
+ "prev_data_date": "2026-11-13",
+ "prev_ref_date": "2026-08-13",
  "ranked": 217,
  "universe": 218,
  "sectors": {
   "General Industrials": {
-   "avg_ret3m": -14.29,
+   "avg_ret3m": -11.63,
    "rs": 1,
    "stocks_used": 18,
-   "rs_prev": 10
-  },
-  "Banking and Finance": {
-   "avg_ret3m": 2.39,
-   "rs": 86,
-   "stocks_used": 52,
-   "rs_prev": 77
-  },
-  "Cement and Construction": {
-   "avg_ret3m": -3.45,
-   "rs": 50,
-   "stocks_used": 8,
-   "rs_prev": 46
-  },
-  "Realty": {
-   "avg_ret3m": 3.73,
-   "rs": 95,
-   "stocks_used": 6,
-   "rs_prev": 81
-  },
-  "FMCG": {
-   "avg_ret3m": -3.59,
-   "rs": 46,
-   "stocks_used": 8,
-   "rs_prev": 41
-  },
-  "Consumer Durables": {
-   "avg_ret3m": -12.42,
-   "rs": 5,
-   "stocks_used": 14,
    "rs_prev": 1
   },
-  "Software & Services": {
-   "avg_ret3m": -1.41,
-   "rs": 68,
-   "stocks_used": 15,
-   "rs_prev": 59
-  },
-  "Automobiles & Auto Components": {
-   "avg_ret3m": -2.57,
-   "rs": 54,
-   "stocks_used": 16,
-   "rs_prev": 68
-  },
-  "Oil & Gas": {
-   "avg_ret3m": 1.4,
-   "rs": 81,
-   "stocks_used": 7,
+  "Banking and Finance": {
+   "avg_ret3m": 4.04,
+   "rs": 90,
+   "stocks_used": 52,
    "rs_prev": 86
   },
+  "Cement and Construction": {
+   "avg_ret3m": -1.29,
+   "rs": 50,
+   "stocks_used": 8,
+   "rs_prev": 28
+  },
+  "Realty": {
+   "avg_ret3m": 5.23,
+   "rs": 95,
+   "stocks_used": 6,
+   "rs_prev": 90
+  },
+  "FMCG": {
+   "avg_ret3m": -1.31,
+   "rs": 46,
+   "stocks_used": 8,
+   "rs_prev": 37
+  },
+  "Consumer Durables": {
+   "avg_ret3m": -8.19,
+   "rs": 10,
+   "stocks_used": 14,
+   "rs_prev": 10
+  },
+  "Software & Services": {
+   "avg_ret3m": -2.48,
+   "rs": 37,
+   "stocks_used": 15,
+   "rs_prev": 63
+  },
+  "Automobiles & Auto Components": {
+   "avg_ret3m": 0.95,
+   "rs": 68,
+   "stocks_used": 16,
+   "rs_prev": 72
+  },
+  "Oil & Gas": {
+   "avg_ret3m": 3.29,
+   "rs": 81,
+   "stocks_used": 7,
+   "rs_prev": 77
+  },
   "Utilities": {
-   "avg_ret3m": -3.69,
-   "rs": 41,
+   "avg_ret3m": -1.04,
+   "rs": 54,
    "stocks_used": 10,
    "rs_prev": 54
   },
   "Metals & Mining": {
-   "avg_ret3m": -6.49,
+   "avg_ret3m": -7.13,
    "rs": 14,
    "stocks_used": 11,
-   "rs_prev": 63
+   "rs_prev": 59
   },
   "Retailing": {
-   "avg_ret3m": -5.84,
+   "avg_ret3m": -5.86,
    "rs": 19,
    "stocks_used": 7,
-   "rs_prev": 23
-  },
-  "Diversified": {
-   "avg_ret3m": -2.56,
-   "rs": 59,
-   "stocks_used": 2,
    "rs_prev": 19
   },
-  "Telecom Services": {
-   "avg_ret3m": 0.36,
-   "rs": 77,
-   "stocks_used": 3,
-   "rs_prev": 95
-  },
-  "Healthcare": {
-   "avg_ret3m": -1.37,
-   "rs": 72,
-   "stocks_used": 4,
-   "rs_prev": 14
-  },
-  "Chemicals & Petrochemicals": {
-   "avg_ret3m": -5.6,
-   "rs": 23,
-   "stocks_used": 5,
-   "rs_prev": 28
-  },
-  "Pharmaceuticals & Biotechnology": {
-   "avg_ret3m": 6.1,
-   "rs": 99,
-   "stocks_used": 13,
-   "rs_prev": 99
-  },
-  "Textiles Apparels & Accessories": {
-   "avg_ret3m": -5.1,
-   "rs": 28,
-   "stocks_used": 3,
-   "rs_prev": 72
-  },
-  "Hotels Restaurants & Tourism": {
-   "avg_ret3m": 2.9,
-   "rs": 90,
+  "Diversified": {
+   "avg_ret3m": -1.36,
+   "rs": 41,
    "stocks_used": 2,
-   "rs_prev": 90
-  },
-  "Transportation": {
-   "avg_ret3m": -4.21,
-   "rs": 37,
-   "stocks_used": 5,
    "rs_prev": 50
   },
+  "Telecom Services": {
+   "avg_ret3m": 0.96,
+   "rs": 72,
+   "stocks_used": 3,
+   "rs_prev": 81
+  },
+  "Healthcare": {
+   "avg_ret3m": 2.44,
+   "rs": 77,
+   "stocks_used": 4,
+   "rs_prev": 41
+  },
+  "Chemicals & Petrochemicals": {
+   "avg_ret3m": -3.66,
+   "rs": 28,
+   "stocks_used": 5,
+   "rs_prev": 23
+  },
+  "Pharmaceuticals & Biotechnology": {
+   "avg_ret3m": 6.65,
+   "rs": 99,
+   "stocks_used": 13,
+   "rs_prev": 95
+  },
+  "Textiles Apparels & Accessories": {
+   "avg_ret3m": -4.77,
+   "rs": 23,
+   "stocks_used": 3,
+   "rs_prev": 68
+  },
+  "Hotels Restaurants & Tourism": {
+   "avg_ret3m": 3.83,
+   "rs": 86,
+   "stocks_used": 2,
+   "rs_prev": 99
+  },
+  "Transportation": {
+   "avg_ret3m": -3.36,
+   "rs": 32,
+   "stocks_used": 5,
+   "rs_prev": 32
+  },
   "Food, Beverages & Tobacco": {
-   "avg_ret3m": -1.67,
-   "rs": 63,
+   "avg_ret3m": -0.62,
+   "rs": 59,
    "stocks_used": 6,
-   "rs_prev": 37
+   "rs_prev": 46
   },
   "Commercial Services & Supplies": {
-   "avg_ret3m": -10.6,
-   "rs": 10,
+   "avg_ret3m": -9.55,
+   "rs": 5,
    "stocks_used": 1,
    "rs_prev": 5
   },
   "Fertilizers": {
-   "avg_ret3m": -5.03,
-   "rs": 32,
+   "avg_ret3m": -0.44,
+   "rs": 63,
    "stocks_used": 1,
-   "rs_prev": 32
+   "rs_prev": 14
   }
  },
- "generated": "2026-11-19T10:13:55+05:30",
+ "generated": "2026-11-21T17:01:56+05:30",
  "stocks": {
   "360ONE": {
    "sector": "Banking and Finance",
-   "ret3m": 4.08,
-   "rs": 70,
-   "sector_rs": 57,
+   "ret3m": 0.42,
+   "rs": 54,
+   "sector_rs": 38,
    "flag": null,
    "rs_prev": 61
   },
   "ABB": {
    "sector": "General Industrials",
-   "ret3m": -9.21,
-   "rs": 30,
+   "ret3m": -7.28,
+   "rs": 33,
    "sector_rs": 70,
    "flag": null,
    "rs_prev": 29
   },
   "ABCAPITAL": {
    "sector": "Diversified",
-   "ret3m": 2.59,
-   "rs": 66,
+   "ret3m": 3.42,
+   "rs": 64,
    "sector_rs": 99,
    "flag": null,
-   "rs_prev": 47
+   "rs_prev": 63
   },
   "ADANIENSOL": {
    "sector": "Utilities",
-   "ret3m": -7.05,
-   "rs": 38,
-   "sector_rs": 23,
-   "flag": null,
-   "rs_prev": 17
-  },
-  "ADANIENT": {
-   "sector": "Commercial Services & Supplies",
-   "ret3m": -10.6,
-   "rs": 27,
-   "sector_rs": 50,
+   "ret3m": -3.66,
+   "rs": 40,
+   "sector_rs": 45,
    "flag": null,
    "rs_prev": 26
   },
+  "ADANIENT": {
+   "sector": "Commercial Services & Supplies",
+   "ret3m": -9.55,
+   "rs": 25,
+   "sector_rs": 50,
+   "flag": null,
+   "rs_prev": 25
+  },
   "ADANIGREEN": {
    "sector": "Utilities",
-   "ret3m": 7.35,
-   "rs": 77,
+   "ret3m": 10.23,
+   "rs": 81,
    "sector_rs": 88,
    "flag": null,
-   "rs_prev": 71
+   "rs_prev": 78
   },
   "ADANIPORTS": {
    "sector": "Transportation",
-   "ret3m": 13.09,
-   "rs": 88,
+   "ret3m": 13.03,
+   "rs": 86,
    "sector_rs": 99,
    "flag": null,
    "rs_prev": 92
   },
   "ADANIPOWER": {
    "sector": "Utilities",
-   "ret3m": -0.14,
-   "rs": 59,
+   "ret3m": 3.9,
+   "rs": 65,
    "sector_rs": 77,
    "flag": null,
-   "rs_prev": 58
+   "rs_prev": 62
   },
   "ALKEM": {
    "sector": "Pharmaceuticals & Biotechnology",
-   "ret3m": -4.61,
-   "rs": 45,
+   "ret3m": -3.98,
+   "rs": 39,
    "sector_rs": 26,
    "flag": null,
-   "rs_prev": 54
+   "rs_prev": 40
   },
   "AMBER": {
    "sector": "Consumer Durables",
-   "ret3m": -15.15,
-   "rs": 15,
-   "sector_rs": 39,
+   "ret3m": -7.35,
+   "rs": 32,
+   "sector_rs": 54,
    "flag": null,
-   "rs_prev": 18
+   "rs_prev": 42
   },
   "AMBUJACEM": {
    "sector": "Cement and Construction",
-   "ret3m": -6.69,
-   "rs": 40,
-   "sector_rs": 29,
+   "ret3m": -2.68,
+   "rs": 44,
+   "sector_rs": 43,
    "flag": null,
-   "rs_prev": 31
+   "rs_prev": 26
   },
   "ANANDRATHI": {
    "sector": "Banking and Finance",
-   "ret3m": 8.21,
-   "rs": 81,
-   "sector_rs": 70,
+   "ret3m": 9.43,
+   "rs": 78,
+   "sector_rs": 64,
    "flag": null,
-   "rs_prev": 86
+   "rs_prev": 81
   },
   "ANGELONE": {
    "sector": "Banking and Finance",
-   "ret3m": 15.96,
-   "rs": 93,
-   "sector_rs": 87,
+   "ret3m": 20.31,
+   "rs": 94,
+   "sector_rs": 89,
    "flag": null,
-   "rs_prev": 94
+   "rs_prev": 95
   },
   "APLAPOLLO": {
    "sector": "Metals & Mining",
-   "ret3m": 2.18,
-   "rs": 65,
-   "sector_rs": 89,
+   "ret3m": -0.86,
+   "rs": 50,
+   "sector_rs": 79,
    "flag": null,
    "rs_prev": 83
   },
   "APOLLOHOSP": {
    "sector": "Healthcare",
-   "ret3m": 0.05,
-   "rs": 60,
+   "ret3m": 5.32,
+   "rs": 70,
    "sector_rs": 34,
    "flag": null,
-   "rs_prev": 52
+   "rs_prev": 60
   },
   "ASHOKLEY": {
    "sector": "Automobiles & Auto Components",
-   "ret3m": -7.88,
+   "ret3m": -6.01,
    "rs": 35,
-   "sector_rs": 27,
+   "sector_rs": 21,
    "flag": null,
-   "rs_prev": 58
+   "rs_prev": 49
   },
   "ASIANPAINT": {
    "sector": "Consumer Durables",
-   "ret3m": -1.83,
-   "rs": 52,
-   "sector_rs": 84,
+   "ret3m": -0.64,
+   "rs": 51,
+   "sector_rs": 76,
    "flag": null,
-   "rs_prev": 35
+   "rs_prev": 33
   },
   "ASTRAL": {
    "sector": "General Industrials",
-   "ret3m": -19.06,
-   "rs": 9,
-   "sector_rs": 36,
+   "ret3m": -18.24,
+   "rs": 8,
+   "sector_rs": 30,
    "flag": null,
-   "rs_prev": 24
+   "rs_prev": 5
   },
   "ATHERENERG": {
    "sector": "Automobiles & Auto Components",
-   "ret3m": 29.7,
+   "ret3m": 33.51,
    "rs": 99,
    "sector_rs": 99,
    "flag": null,
-   "rs_prev": 97
+   "rs_prev": 98
   },
   "AUBANK": {
    "sector": "Banking and Finance",
-   "ret3m": -9.18,
-   "rs": 31,
-   "sector_rs": 20,
+   "ret3m": -9.48,
+   "rs": 25,
+   "sector_rs": 16,
    "flag": null,
-   "rs_prev": 21
+   "rs_prev": 19
   },
   "AUROPHARMA": {
    "sector": "Pharmaceuticals & Biotechnology",
-   "ret3m": 9.2,
-   "rs": 82,
-   "sector_rs": 58,
+   "ret3m": 11.88,
+   "rs": 85,
+   "sector_rs": 66,
    "flag": null,
-   "rs_prev": 86
+   "rs_prev": 84
   },
   "AXISBANK": {
    "sector": "Banking and Finance",
-   "ret3m": 9.41,
-   "rs": 83,
-   "sector_rs": 72,
+   "ret3m": 15.59,
+   "rs": 90,
+   "sector_rs": 80,
    "flag": null,
-   "rs_prev": 82
+   "rs_prev": 83
   },
   "BAJAJ-AUTO": {
    "sector": "Automobiles & Auto Components",
-   "ret3m": -8.93,
-   "rs": 31,
+   "ret3m": -8.72,
+   "rs": 28,
    "sector_rs": 14,
    "flag": null,
    "rs_prev": 37
   },
   "BAJAJFINSV": {
    "sector": "Diversified",
-   "ret3m": -7.71,
-   "rs": 37,
+   "ret3m": -6.15,
+   "rs": 35,
    "sector_rs": 1,
    "flag": null,
-   "rs_prev": 26
+   "rs_prev": 31
   },
   "BAJFINANCE": {
    "sector": "Banking and Finance",
-   "ret3m": -0.04,
-   "rs": 60,
-   "sector_rs": 41,
+   "ret3m": 2.47,
+   "rs": 61,
+   "sector_rs": 47,
    "flag": null,
-   "rs_prev": 55
+   "rs_prev": 69
   },
   "BANDHANBNK": {
    "sector": "Banking and Finance",
-   "ret3m": -0.26,
-   "rs": 58,
+   "ret3m": 0.52,
+   "rs": 55,
    "sector_rs": 39,
    "flag": null,
-   "rs_prev": 54
+   "rs_prev": 56
   },
   "BANKBARODA": {
    "sector": "Banking and Finance",
-   "ret3m": 12.5,
-   "rs": 88,
-   "sector_rs": 80,
+   "ret3m": 17.38,
+   "rs": 92,
+   "sector_rs": 86,
    "flag": null,
-   "rs_prev": 88
+   "rs_prev": 86
   },
   "BANKINDIA": {
    "sector": "Banking and Finance",
-   "ret3m": 11.19,
-   "rs": 86,
-   "sector_rs": 74,
+   "ret3m": 15.34,
+   "rs": 90,
+   "sector_rs": 78,
    "flag": null,
-   "rs_prev": 74
+   "rs_prev": 79
   },
   "BDL": {
    "sector": "General Industrials",
-   "ret3m": -27.25,
-   "rs": 3,
-   "sector_rs": 7,
+   "ret3m": -21.45,
+   "rs": 5,
+   "sector_rs": 13,
    "flag": null,
-   "rs_prev": 8
+   "rs_prev": 3
   },
   "BEL": {
    "sector": "General Industrials",
-   "ret3m": -3.93,
+   "ret3m": -1.81,
    "rs": 47,
    "sector_rs": 87,
    "flag": null,
-   "rs_prev": 51
+   "rs_prev": 54
   },
   "BHARATFORG": {
    "sector": "General Industrials",
-   "ret3m": -19.74,
-   "rs": 8,
-   "sector_rs": 30,
+   "ret3m": -15.13,
+   "rs": 12,
+   "sector_rs": 36,
    "flag": null,
-   "rs_prev": 10
+   "rs_prev": 9
   },
   "BHARTIARTL": {
    "sector": "Telecom Services",
-   "ret3m": 10.23,
-   "rs": 85,
+   "ret3m": 11.33,
+   "rs": 84,
    "sector_rs": 99,
    "flag": null,
-   "rs_prev": 85
+   "rs_prev": 81
   },
   "BHEL": {
    "sector": "General Industrials",
-   "ret3m": -0.78,
-   "rs": 57,
-   "sector_rs": 93,
-   "flag": null,
-   "rs_prev": 76
-  },
-  "BIOCON": {
-   "sector": "Pharmaceuticals & Biotechnology",
-   "ret3m": -13.31,
-   "rs": 19,
-   "sector_rs": 1,
-   "flag": null,
-   "rs_prev": 14
-  },
-  "BLUESTARCO": {
-   "sector": "Consumer Durables",
-   "ret3m": 8.63,
-   "rs": 82,
+   "ret3m": 4.87,
+   "rs": 67,
    "sector_rs": 99,
    "flag": null,
    "rs_prev": 72
   },
+  "BIOCON": {
+   "sector": "Pharmaceuticals & Biotechnology",
+   "ret3m": -11.66,
+   "rs": 19,
+   "sector_rs": 1,
+   "flag": null,
+   "rs_prev": 15
+  },
+  "BLUESTARCO": {
+   "sector": "Consumer Durables",
+   "ret3m": 18.61,
+   "rs": 94,
+   "sector_rs": 99,
+   "flag": null,
+   "rs_prev": 75
+  },
   "BOSCHLTD": {
    "sector": "Automobiles & Auto Components",
-   "ret3m": 0.9,
-   "rs": 64,
-   "sector_rs": 73,
+   "ret3m": 1.25,
+   "rs": 56,
+   "sector_rs": 53,
    "flag": null,
-   "rs_prev": 89
+   "rs_prev": 76
   },
   "BPCL": {
    "sector": "Oil & Gas",
-   "ret3m": -1.55,
-   "rs": 54,
+   "ret3m": 1.75,
+   "rs": 60,
    "sector_rs": 34,
    "flag": null,
-   "rs_prev": 56
+   "rs_prev": 47
   },
   "BRITANNIA": {
    "sector": "FMCG",
-   "ret3m": -14.96,
-   "rs": 16,
+   "ret3m": -11.68,
+   "rs": 18,
    "sector_rs": 1,
    "flag": null,
-   "rs_prev": 13
+   "rs_prev": 11
   },
   "BSE": {
    "sector": "Banking and Finance",
-   "ret3m": 13.53,
+   "ret3m": 14.89,
    "rs": 89,
-   "sector_rs": 84,
+   "sector_rs": 76,
    "flag": null,
-   "rs_prev": 81
+   "rs_prev": 88
   },
   "CAMS": {
    "sector": "Software & Services",
-   "ret3m": -6.04,
-   "rs": 41,
+   "ret3m": -3.28,
+   "rs": 40,
    "sector_rs": 29,
    "flag": null,
-   "rs_prev": 30
+   "rs_prev": 41
   },
   "CANBK": {
    "sector": "Banking and Finance",
-   "ret3m": 3.33,
-   "rs": 68,
-   "sector_rs": 53,
+   "ret3m": 7.19,
+   "rs": 73,
+   "sector_rs": 59,
    "flag": null,
-   "rs_prev": 67
+   "rs_prev": 60
   },
   "CDSL": {
    "sector": "Banking and Finance",
-   "ret3m": 5.67,
-   "rs": 74,
-   "sector_rs": 62,
+   "ret3m": 6.25,
+   "rs": 71,
+   "sector_rs": 55,
    "flag": null,
-   "rs_prev": 73
+   "rs_prev": 80
   },
   "CGPOWER": {
    "sector": "General Industrials",
-   "ret3m": -11.54,
-   "rs": 25,
+   "ret3m": -9.62,
+   "rs": 24,
    "sector_rs": 59,
    "flag": null,
-   "rs_prev": 36
+   "rs_prev": 38
   },
   "CHOLAFIN": {
    "sector": "Banking and Finance",
-   "ret3m": 0.37,
-   "rs": 62,
-   "sector_rs": 43,
+   "ret3m": -0.76,
+   "rs": 50,
+   "sector_rs": 34,
    "flag": null,
-   "rs_prev": 39
+   "rs_prev": 49
   },
   "CIPLA": {
    "sector": "Pharmaceuticals & Biotechnology",
-   "ret3m": -0.99,
-   "rs": 56,
+   "ret3m": -1.6,
+   "rs": 49,
    "sector_rs": 34,
    "flag": null,
    "rs_prev": 46
   },
   "COALINDIA": {
    "sector": "Metals & Mining",
-   "ret3m": -4.64,
-   "rs": 45,
-   "sector_rs": 50,
+   "ret3m": -3.11,
+   "rs": 42,
+   "sector_rs": 60,
    "flag": null,
-   "rs_prev": 53
+   "rs_prev": 56
   },
   "COCHINSHIP": {
    "sector": "Transportation",
-   "ret3m": -23.28,
-   "rs": 6,
+   "ret3m": -24.45,
+   "rs": 4,
    "sector_rs": 1,
    "flag": null,
    "rs_prev": 4
   },
   "COFORGE": {
    "sector": "Software & Services",
-   "ret3m": 15.57,
-   "rs": 92,
-   "sector_rs": 92,
+   "ret3m": 10.88,
+   "rs": 82,
+   "sector_rs": 99,
    "flag": null,
-   "rs_prev": 88
+   "rs_prev": 86
   },
   "COLPAL": {
    "sector": "FMCG",
-   "ret3m": -11.28,
-   "rs": 26,
+   "ret3m": -7.85,
+   "rs": 31,
    "sector_rs": 29,
    "flag": null,
-   "rs_prev": 15
+   "rs_prev": 14
   },
   "CONCOR": {
    "sector": "Transportation",
-   "ret3m": -15.69,
-   "rs": 13,
+   "ret3m": -15.54,
+   "rs": 12,
    "sector_rs": 26,
    "flag": null,
-   "rs_prev": 18
+   "rs_prev": 8
   },
   "COROMANDEL": {
    "sector": "Fertilizers",
-   "ret3m": -5.03,
-   "rs": 44,
+   "ret3m": -0.44,
+   "rs": 52,
    "sector_rs": 50,
    "flag": null,
-   "rs_prev": 41
+   "rs_prev": 40
   },
   "CROMPTON": {
    "sector": "Consumer Durables",
-   "ret3m": -15.32,
-   "rs": 15,
-   "sector_rs": 31,
+   "ret3m": -11.35,
+   "rs": 20,
+   "sector_rs": 39,
    "flag": null,
-   "rs_prev": 20
+   "rs_prev": 12
   },
   "CUB": {
    "sector": "Banking and Finance",
-   "ret3m": 4.51,
-   "rs": 72,
-   "sector_rs": 59,
+   "ret3m": 13.43,
+   "rs": 88,
+   "sector_rs": 72,
    "flag": null,
-   "rs_prev": 80
+   "rs_prev": 85
   },
   "CUMMINSIND": {
    "sector": "General Industrials",
-   "ret3m": -25.14,
-   "rs": 4,
-   "sector_rs": 13,
+   "ret3m": -21.23,
+   "rs": 7,
+   "sector_rs": 24,
    "flag": null,
-   "rs_prev": 4
+   "rs_prev": 6
   },
   "DABUR": {
    "sector": "FMCG",
-   "ret3m": -6.01,
-   "rs": 42,
-   "sector_rs": 43,
+   "ret3m": -1.72,
+   "rs": 48,
+   "sector_rs": 57,
    "flag": null,
    "rs_prev": 35
   },
   "DATAPATTNS": {
    "sector": "General Industrials",
-   "ret3m": -13.22,
-   "rs": 19,
-   "sector_rs": 41,
+   "ret3m": -10.32,
+   "rs": 21,
+   "sector_rs": 47,
    "flag": null,
-   "rs_prev": 33
+   "rs_prev": 41
   },
   "DELHIVERY": {
    "sector": "Transportation",
-   "ret3m": -0.51,
-   "rs": 58,
+   "ret3m": 1.96,
+   "rs": 60,
    "sector_rs": 50,
    "flag": null,
-   "rs_prev": 33
+   "rs_prev": 38
   },
   "DIVISLAB": {
    "sector": "Pharmaceuticals & Biotechnology",
-   "ret3m": 28.66,
+   "ret3m": 30.46,
    "rs": 98,
    "sector_rs": 99,
    "flag": null,
@@ -613,259 +613,259 @@
   },
   "DIXON": {
    "sector": "Consumer Durables",
-   "ret3m": -10.85,
-   "rs": 26,
-   "sector_rs": 61,
+   "ret3m": -11.65,
+   "rs": 19,
+   "sector_rs": 31,
    "flag": null,
-   "rs_prev": 31
+   "rs_prev": 27
   },
   "DLF": {
    "sector": "Realty",
-   "ret3m": 14.8,
+   "ret3m": 16.1,
    "rs": 91,
-   "sector_rs": 99,
+   "sector_rs": 79,
    "flag": null,
-   "rs_prev": 91
+   "rs_prev": 90
   },
   "DMART": {
    "sector": "Retailing",
-   "ret3m": -13.11,
-   "rs": 20,
+   "ret3m": -11.87,
+   "rs": 18,
    "sector_rs": 34,
    "flag": null,
    "rs_prev": 10
   },
   "DRREDDY": {
    "sector": "Pharmaceuticals & Biotechnology",
-   "ret3m": 18.61,
-   "rs": 94,
+   "ret3m": 17.81,
+   "rs": 93,
    "sector_rs": 83,
    "flag": null,
-   "rs_prev": 92
+   "rs_prev": 91
   },
   "EICHERMOT": {
    "sector": "Automobiles & Auto Components",
-   "ret3m": -3.97,
-   "rs": 46,
-   "sector_rs": 53,
-   "flag": null,
-   "rs_prev": 40
-  },
-  "ENRIN": {
-   "sector": "Utilities",
-   "ret3m": -17.48,
-   "rs": 11,
-   "sector_rs": 1,
-   "flag": null,
-   "rs_prev": 6
-  },
-  "ETERNAL": {
-   "sector": "Retailing",
-   "ret3m": 15.86,
-   "rs": 92,
-   "sector_rs": 99,
-   "flag": null,
-   "rs_prev": 90
-  },
-  "FEDERALBNK": {
-   "sector": "Banking and Finance",
-   "ret3m": 0.71,
-   "rs": 63,
+   "ret3m": 0.88,
+   "rs": 55,
    "sector_rs": 47,
-   "flag": null,
-   "rs_prev": 68
-  },
-  "FORCEMOT": {
-   "sector": "Automobiles & Auto Components",
-   "ret3m": 10.37,
-   "rs": 86,
-   "sector_rs": 92,
-   "flag": null,
-   "rs_prev": 82
-  },
-  "FORTIS": {
-   "sector": "Healthcare",
-   "ret3m": -13.43,
-   "rs": 18,
-   "sector_rs": 1,
-   "flag": null,
-   "rs_prev": 6
-  },
-  "GAIL": {
-   "sector": "Utilities",
-   "ret3m": 9.51,
-   "rs": 83,
-   "sector_rs": 99,
-   "flag": null,
-   "rs_prev": 81
-  },
-  "GLENMARK": {
-   "sector": "Pharmaceuticals & Biotechnology",
-   "ret3m": 14.8,
-   "rs": 91,
-   "sector_rs": 74,
-   "flag": null,
-   "rs_prev": 94
-  },
-  "GMRAIRPORT": {
-   "sector": "Cement and Construction",
-   "ret3m": 2.97,
-   "rs": 67,
-   "sector_rs": 85,
    "flag": null,
    "rs_prev": 43
   },
-  "GODFRYPHLP": {
-   "sector": "Food, Beverages & Tobacco",
-   "ret3m": -16.36,
-   "rs": 11,
+  "ENRIN": {
+   "sector": "Utilities",
+   "ret3m": -14.3,
+   "rs": 14,
    "sector_rs": 1,
    "flag": null,
-   "rs_prev": 5
+   "rs_prev": 17
+  },
+  "ETERNAL": {
+   "sector": "Retailing",
+   "ret3m": 10.99,
+   "rs": 83,
+   "sector_rs": 99,
+   "flag": null,
+   "rs_prev": 91
+  },
+  "FEDERALBNK": {
+   "sector": "Banking and Finance",
+   "ret3m": 5.12,
+   "rs": 69,
+   "sector_rs": 53,
+   "flag": null,
+   "rs_prev": 69
+  },
+  "FORCEMOT": {
+   "sector": "Automobiles & Auto Components",
+   "ret3m": 13.42,
+   "rs": 87,
+   "sector_rs": 92,
+   "flag": null,
+   "rs_prev": 77
+  },
+  "FORTIS": {
+   "sector": "Healthcare",
+   "ret3m": -10.01,
+   "rs": 23,
+   "sector_rs": 1,
+   "flag": null,
+   "rs_prev": 10
+  },
+  "GAIL": {
+   "sector": "Utilities",
+   "ret3m": 10.98,
+   "rs": 82,
+   "sector_rs": 99,
+   "flag": null,
+   "rs_prev": 79
+  },
+  "GLENMARK": {
+   "sector": "Pharmaceuticals & Biotechnology",
+   "ret3m": 13.51,
+   "rs": 88,
+   "sector_rs": 74,
+   "flag": null,
+   "rs_prev": 90
+  },
+  "GMRAIRPORT": {
+   "sector": "Cement and Construction",
+   "ret3m": 4.57,
+   "rs": 66,
+   "sector_rs": 71,
+   "flag": null,
+   "rs_prev": 50
+  },
+  "GODFRYPHLP": {
+   "sector": "Food, Beverages & Tobacco",
+   "ret3m": -15.13,
+   "rs": 13,
+   "sector_rs": 1,
+   "flag": null,
+   "rs_prev": 8
   },
   "GODREJCP": {
    "sector": "FMCG",
-   "ret3m": -3.71,
-   "rs": 47,
-   "sector_rs": 57,
+   "ret3m": -2.9,
+   "rs": 43,
+   "sector_rs": 43,
    "flag": null,
-   "rs_prev": 11
+   "rs_prev": 35
   },
   "GODREJPROP": {
    "sector": "Realty",
-   "ret3m": -6.0,
-   "rs": 42,
+   "ret3m": -4.45,
+   "rs": 38,
    "sector_rs": 1,
    "flag": null,
-   "rs_prev": 20
+   "rs_prev": 28
   },
   "GRASIM": {
    "sector": "Cement and Construction",
-   "ret3m": -6.61,
-   "rs": 40,
-   "sector_rs": 43,
+   "ret3m": -5.95,
+   "rs": 35,
+   "sector_rs": 29,
    "flag": null,
-   "rs_prev": 40
+   "rs_prev": 37
   },
   "GVT&D": {
    "sector": "General Industrials",
-   "ret3m": 2.98,
-   "rs": 67,
-   "sector_rs": 99,
-   "flag": null,
-   "rs_prev": 42
-  },
-  "HAL": {
-   "sector": "General Industrials",
-   "ret3m": -8.32,
-   "rs": 35,
-   "sector_rs": 82,
-   "flag": null,
-   "rs_prev": 63
-  },
-  "HAVELLS": {
-   "sector": "Consumer Durables",
-   "ret3m": -12.29,
-   "rs": 23,
-   "sector_rs": 46,
-   "flag": null,
-   "rs_prev": 32
-  },
-  "HCLTECH": {
-   "sector": "Software & Services",
-   "ret3m": 3.6,
-   "rs": 69,
-   "sector_rs": 57,
+   "ret3m": 4.57,
+   "rs": 66,
+   "sector_rs": 93,
    "flag": null,
    "rs_prev": 70
   },
+  "HAL": {
+   "sector": "General Industrials",
+   "ret3m": -3.78,
+   "rs": 39,
+   "sector_rs": 82,
+   "flag": null,
+   "rs_prev": 53
+  },
+  "HAVELLS": {
+   "sector": "Consumer Durables",
+   "ret3m": -5.24,
+   "rs": 37,
+   "sector_rs": 61,
+   "flag": null,
+   "rs_prev": 28
+  },
+  "HCLTECH": {
+   "sector": "Software & Services",
+   "ret3m": 1.97,
+   "rs": 60,
+   "sector_rs": 50,
+   "flag": null,
+   "rs_prev": 63
+  },
   "HDFCAMC": {
    "sector": "Banking and Finance",
-   "ret3m": 4.91,
-   "rs": 73,
-   "sector_rs": 61,
+   "ret3m": 2.78,
+   "rs": 62,
+   "sector_rs": 51,
    "flag": null,
    "rs_prev": 79
   },
   "HDFCBANK": {
    "sector": "Banking and Finance",
-   "ret3m": 11.78,
-   "rs": 87,
-   "sector_rs": 76,
+   "ret3m": 16.68,
+   "rs": 92,
+   "sector_rs": 84,
    "flag": null,
    "rs_prev": 87
   },
   "HDFCLIFE": {
    "sector": "Banking and Finance",
-   "ret3m": 6.92,
-   "rs": 75,
-   "sector_rs": 64,
-   "flag": null,
-   "rs_prev": 76
-  },
-  "HEROMOTOCO": {
-   "sector": "Automobiles & Auto Components",
-   "ret3m": -8.57,
-   "rs": 34,
-   "sector_rs": 21,
-   "flag": null,
-   "rs_prev": 28
-  },
-  "HINDALCO": {
-   "sector": "Metals & Mining",
-   "ret3m": -13.59,
-   "rs": 17,
-   "sector_rs": 21,
-   "flag": null,
-   "rs_prev": 30
-  },
-  "HINDPETRO": {
-   "sector": "Oil & Gas",
-   "ret3m": 5.59,
-   "rs": 74,
-   "sector_rs": 83,
-   "flag": null,
-   "rs_prev": 70
-  },
-  "HINDUNILVR": {
-   "sector": "FMCG",
-   "ret3m": -2.06,
-   "rs": 52,
-   "sector_rs": 71,
-   "flag": null,
-   "rs_prev": 49
-  },
-  "HINDZINC": {
-   "sector": "Metals & Mining",
-   "ret3m": -5.56,
-   "rs": 43,
-   "sector_rs": 40,
-   "flag": null,
-   "rs_prev": 55
-  },
-  "HYUNDAI": {
-   "sector": "Automobiles & Auto Components",
-   "ret3m": -4.05,
-   "rs": 46,
-   "sector_rs": 47,
-   "flag": null,
-   "rs_prev": 50
-  },
-  "ICICIBANK": {
-   "sector": "Banking and Finance",
-   "ret3m": 13.41,
-   "rs": 89,
-   "sector_rs": 82,
+   "ret3m": 8.61,
+   "rs": 76,
+   "sector_rs": 61,
    "flag": null,
    "rs_prev": 84
   },
+  "HEROMOTOCO": {
+   "sector": "Automobiles & Auto Components",
+   "ret3m": -3.56,
+   "rs": 40,
+   "sector_rs": 27,
+   "flag": null,
+   "rs_prev": 30
+  },
+  "HINDALCO": {
+   "sector": "Metals & Mining",
+   "ret3m": -9.74,
+   "rs": 24,
+   "sector_rs": 30,
+   "flag": null,
+   "rs_prev": 24
+  },
+  "HINDPETRO": {
+   "sector": "Oil & Gas",
+   "ret3m": 9.13,
+   "rs": 77,
+   "sector_rs": 66,
+   "flag": null,
+   "rs_prev": 51
+  },
+  "HINDUNILVR": {
+   "sector": "FMCG",
+   "ret3m": 1.21,
+   "rs": 56,
+   "sector_rs": 71,
+   "flag": null,
+   "rs_prev": 45
+  },
+  "HINDZINC": {
+   "sector": "Metals & Mining",
+   "ret3m": -9.11,
+   "rs": 27,
+   "sector_rs": 40,
+   "flag": null,
+   "rs_prev": 48
+  },
+  "HYUNDAI": {
+   "sector": "Automobiles & Auto Components",
+   "ret3m": -0.54,
+   "rs": 51,
+   "sector_rs": 40,
+   "flag": null,
+   "rs_prev": 35
+  },
+  "ICICIBANK": {
+   "sector": "Banking and Finance",
+   "ret3m": 16.16,
+   "rs": 91,
+   "sector_rs": 82,
+   "flag": null,
+   "rs_prev": 89
+  },
   "ICICIGI": {
    "sector": "Banking and Finance",
-   "ret3m": 1.4,
-   "rs": 65,
-   "sector_rs": 51,
+   "ret3m": 6.83,
+   "rs": 72,
+   "sector_rs": 57,
    "flag": null,
-   "rs_prev": 68
+   "rs_prev": 73
   },
   "ICICILIFE": {
    "sector": "Banking and Finance",
@@ -877,335 +877,335 @@
   },
   "IDEA": {
    "sector": "Telecom Services",
-   "ret3m": -14.31,
+   "ret3m": -13.4,
    "rs": 16,
    "sector_rs": 1,
    "flag": null,
-   "rs_prev": 60
+   "rs_prev": 36
   },
   "IDFCFIRSTB": {
    "sector": "Banking and Finance",
-   "ret3m": -2.73,
-   "rs": 50,
-   "sector_rs": 32,
+   "ret3m": 1.65,
+   "rs": 59,
+   "sector_rs": 45,
    "flag": null,
-   "rs_prev": 41
+   "rs_prev": 30
   },
   "IEX": {
    "sector": "Banking and Finance",
-   "ret3m": -7.56,
-   "rs": 37,
-   "sector_rs": 28,
+   "ret3m": -8.27,
+   "rs": 30,
+   "sector_rs": 24,
    "flag": null,
-   "rs_prev": 26
+   "rs_prev": 34
   },
   "INDHOTEL": {
    "sector": "Hotels Restaurants & Tourism",
-   "ret3m": 21.7,
-   "rs": 95,
+   "ret3m": 23.94,
+   "rs": 97,
    "sector_rs": 99,
    "flag": null,
-   "rs_prev": 95
+   "rs_prev": 96
   },
   "INDIANB": {
    "sector": "Banking and Finance",
-   "ret3m": 7.09,
-   "rs": 76,
-   "sector_rs": 66,
+   "ret3m": 9.07,
+   "rs": 77,
+   "sector_rs": 62,
    "flag": null,
-   "rs_prev": 75
+   "rs_prev": 73
   },
   "INDIGO": {
    "sector": "Transportation",
-   "ret3m": 5.35,
+   "ret3m": 8.18,
    "rs": 74,
    "sector_rs": 74,
    "flag": null,
-   "rs_prev": 77
+   "rs_prev": 74
   },
   "INDUSINDBK": {
    "sector": "Banking and Finance",
-   "ret3m": -10.16,
-   "rs": 28,
-   "sector_rs": 16,
+   "ret3m": -0.5,
+   "rs": 52,
+   "sector_rs": 36,
    "flag": null,
-   "rs_prev": 23
+   "rs_prev": 22
   },
   "INDUSTOWER": {
    "sector": "Telecom Services",
-   "ret3m": 5.16,
-   "rs": 73,
+   "ret3m": 4.93,
+   "rs": 68,
    "sector_rs": 50,
    "flag": null,
-   "rs_prev": 78
+   "rs_prev": 71
   },
   "INFY": {
    "sector": "Software & Services",
-   "ret3m": -0.56,
-   "rs": 57,
-   "sector_rs": 43,
+   "ret3m": -2.83,
+   "rs": 43,
+   "sector_rs": 36,
    "flag": null,
-   "rs_prev": 45
+   "rs_prev": 52
   },
   "INOXWIND": {
    "sector": "General Industrials",
-   "ret3m": -23.28,
-   "rs": 5,
-   "sector_rs": 24,
+   "ret3m": -24.95,
+   "rs": 3,
+   "sector_rs": 7,
    "flag": null,
-   "rs_prev": 21
+   "rs_prev": 16
   },
   "IOC": {
    "sector": "Oil & Gas",
-   "ret3m": 4.37,
-   "rs": 72,
-   "sector_rs": 66,
+   "ret3m": 10.74,
+   "rs": 81,
+   "sector_rs": 83,
    "flag": null,
-   "rs_prev": 74
+   "rs_prev": 66
   },
   "IREDA": {
    "sector": "Banking and Finance",
-   "ret3m": 3.93,
-   "rs": 70,
-   "sector_rs": 55,
+   "ret3m": 14.62,
+   "rs": 89,
+   "sector_rs": 74,
    "flag": null,
-   "rs_prev": 65
+   "rs_prev": 64
   },
   "IRFC": {
    "sector": "Banking and Finance",
-   "ret3m": -5.82,
-   "rs": 43,
-   "sector_rs": 30,
+   "ret3m": -3.16,
+   "rs": 41,
+   "sector_rs": 28,
    "flag": null,
-   "rs_prev": 55
+   "rs_prev": 42
   },
   "ITC": {
    "sector": "Food, Beverages & Tobacco",
-   "ret3m": 9.85,
-   "rs": 84,
+   "ret3m": 10.1,
+   "rs": 80,
    "sector_rs": 99,
    "flag": null,
-   "rs_prev": 69
+   "rs_prev": 68
   },
   "JINDALSTEL": {
    "sector": "Metals & Mining",
-   "ret3m": 0.14,
-   "rs": 60,
-   "sector_rs": 79,
+   "ret3m": 1.16,
+   "rs": 55,
+   "sector_rs": 89,
    "flag": null,
    "rs_prev": 75
   },
   "JIOFIN": {
    "sector": "Banking and Finance",
-   "ret3m": -8.67,
-   "rs": 33,
+   "ret3m": -8.03,
+   "rs": 30,
    "sector_rs": 26,
    "flag": null,
-   "rs_prev": 29
+   "rs_prev": 21
   },
   "JSWENERGY": {
    "sector": "Utilities",
-   "ret3m": -6.61,
-   "rs": 40,
-   "sector_rs": 34,
+   "ret3m": -5.28,
+   "rs": 36,
+   "sector_rs": 23,
    "flag": null,
-   "rs_prev": 34
+   "rs_prev": 31
   },
   "JSWSTEEL": {
    "sector": "Metals & Mining",
-   "ret3m": 3.81,
-   "rs": 69,
+   "ret3m": 2.87,
+   "rs": 63,
    "sector_rs": 99,
    "flag": null,
-   "rs_prev": 74
+   "rs_prev": 76
   },
   "JUBLFOOD": {
    "sector": "Hotels Restaurants & Tourism",
-   "ret3m": -15.9,
-   "rs": 12,
+   "ret3m": -16.28,
+   "rs": 11,
    "sector_rs": 1,
    "flag": null,
-   "rs_prev": 22
+   "rs_prev": 21
   },
   "KALYANKJIL": {
    "sector": "Textiles Apparels & Accessories",
-   "ret3m": 8.05,
-   "rs": 80,
+   "ret3m": 7.16,
+   "rs": 73,
    "sector_rs": 99,
    "flag": null,
-   "rs_prev": 85
+   "rs_prev": 89
   },
   "KARURVYSYA": {
    "sector": "Banking and Finance",
-   "ret3m": 15.9,
-   "rs": 93,
-   "sector_rs": 86,
+   "ret3m": 12.84,
+   "rs": 85,
+   "sector_rs": 68,
    "flag": null,
-   "rs_prev": 93
+   "rs_prev": 89
   },
   "KAYNES": {
    "sector": "Consumer Durables",
-   "ret3m": -20.91,
-   "rs": 7,
+   "ret3m": -23.72,
+   "rs": 5,
    "sector_rs": 9,
    "flag": null,
    "rs_prev": 27
   },
   "KEI": {
    "sector": "Consumer Durables",
-   "ret3m": -35.66,
-   "rs": 1,
+   "ret3m": -32.54,
+   "rs": 2,
    "sector_rs": 1,
    "flag": null,
    "rs_prev": 2
   },
   "KFINTECH": {
    "sector": "Banking and Finance",
-   "ret3m": -2.6,
-   "rs": 51,
-   "sector_rs": 34,
+   "ret3m": -2.72,
+   "rs": 44,
+   "sector_rs": 30,
    "flag": null,
-   "rs_prev": 60
+   "rs_prev": 68
   },
   "KOTAKBANK": {
    "sector": "Banking and Finance",
-   "ret3m": 27.65,
-   "rs": 97,
-   "sector_rs": 95,
+   "ret3m": 29.81,
+   "rs": 98,
+   "sector_rs": 97,
    "flag": null,
    "rs_prev": 97
   },
   "KPITTECH": {
    "sector": "Software & Services",
-   "ret3m": -12.55,
-   "rs": 21,
+   "ret3m": -12.46,
+   "rs": 17,
    "sector_rs": 15,
-   "flag": null,
-   "rs_prev": 16
-  },
-  "LAURUSLABS": {
-   "sector": "Pharmaceuticals & Biotechnology",
-   "ret3m": 28.03,
-   "rs": 97,
-   "sector_rs": 91,
-   "flag": null,
-   "rs_prev": 99
-  },
-  "LICHSGFIN": {
-   "sector": "Banking and Finance",
-   "ret3m": 22.29,
-   "rs": 96,
-   "sector_rs": 93,
-   "flag": null,
-   "rs_prev": 89
-  },
-  "LICI": {
-   "sector": "Banking and Finance",
-   "ret3m": -2.44,
-   "rs": 51,
-   "sector_rs": 36,
-   "flag": null,
-   "rs_prev": 53
-  },
-  "LODHA": {
-   "sector": "Realty",
-   "ret3m": -1.16,
-   "rs": 56,
-   "sector_rs": 40,
-   "flag": null,
-   "rs_prev": 45
-  },
-  "LT": {
-   "sector": "Cement and Construction",
-   "ret3m": 2.33,
-   "rs": 66,
-   "sector_rs": 71,
-   "flag": null,
-   "rs_prev": 72
-  },
-  "LTF": {
-   "sector": "Banking and Finance",
-   "ret3m": -15.75,
-   "rs": 13,
-   "sector_rs": 5,
-   "flag": null,
-   "rs_prev": 12
-  },
-  "LTM": {
-   "sector": "Software & Services",
-   "ret3m": -10.68,
-   "rs": 27,
-   "sector_rs": 22,
-   "flag": null,
-   "rs_prev": 16
-  },
-  "LUPIN": {
-   "sector": "Pharmaceuticals & Biotechnology",
-   "ret3m": -11.65,
-   "rs": 24,
-   "sector_rs": 9,
    "flag": null,
    "rs_prev": 21
   },
-  "M&M": {
-   "sector": "Automobiles & Auto Components",
-   "ret3m": -1.82,
-   "rs": 53,
-   "sector_rs": 60,
+  "LAURUSLABS": {
+   "sector": "Pharmaceuticals & Biotechnology",
+   "ret3m": 25.73,
+   "rs": 97,
+   "sector_rs": 91,
+   "flag": null,
+   "rs_prev": 98
+  },
+  "LICHSGFIN": {
+   "sector": "Banking and Finance",
+   "ret3m": 21.03,
+   "rs": 95,
+   "sector_rs": 91,
+   "flag": null,
+   "rs_prev": 93
+  },
+  "LICI": {
+   "sector": "Banking and Finance",
+   "ret3m": -1.98,
+   "rs": 46,
+   "sector_rs": 32,
+   "flag": null,
+   "rs_prev": 51
+  },
+  "LODHA": {
+   "sector": "Realty",
+   "ret3m": -1.72,
+   "rs": 48,
+   "sector_rs": 40,
    "flag": null,
    "rs_prev": 60
   },
-  "MAHABANK": {
-   "sector": "Banking and Finance",
-   "ret3m": 19.27,
-   "rs": 94,
-   "sector_rs": 91,
+  "LT": {
+   "sector": "Cement and Construction",
+   "ret3m": 3.14,
+   "rs": 63,
+   "sector_rs": 57,
    "flag": null,
-   "rs_prev": 91
+   "rs_prev": 66
   },
-  "MANAPPURAM": {
+  "LTF": {
    "sector": "Banking and Finance",
-   "ret3m": -18.35,
-   "rs": 10,
-   "sector_rs": 3,
+   "ret3m": -13.55,
+   "rs": 15,
+   "sector_rs": 13,
+   "flag": null,
+   "rs_prev": 18
+  },
+  "LTM": {
+   "sector": "Software & Services",
+   "ret3m": -8.49,
+   "rs": 30,
+   "sector_rs": 22,
    "flag": null,
    "rs_prev": 22
   },
+  "LUPIN": {
+   "sector": "Pharmaceuticals & Biotechnology",
+   "ret3m": -8.52,
+   "rs": 29,
+   "sector_rs": 9,
+   "flag": null,
+   "rs_prev": 19
+  },
+  "M&M": {
+   "sector": "Automobiles & Auto Components",
+   "ret3m": 3.51,
+   "rs": 65,
+   "sector_rs": 66,
+   "flag": null,
+   "rs_prev": 52
+  },
+  "MAHABANK": {
+   "sector": "Banking and Finance",
+   "ret3m": 23.88,
+   "rs": 96,
+   "sector_rs": 95,
+   "flag": null,
+   "rs_prev": 88
+  },
+  "MANAPPURAM": {
+   "sector": "Banking and Finance",
+   "ret3m": -19.69,
+   "rs": 8,
+   "sector_rs": 3,
+   "flag": null,
+   "rs_prev": 20
+  },
   "MANKIND": {
    "sector": "Pharmaceuticals & Biotechnology",
-   "ret3m": 10.29,
-   "rs": 85,
-   "sector_rs": 66,
+   "ret3m": 11.74,
+   "rs": 84,
+   "sector_rs": 58,
    "flag": null,
    "rs_prev": 84
   },
   "MARICO": {
    "sector": "FMCG",
-   "ret3m": 7.66,
-   "rs": 78,
+   "ret3m": 6.83,
+   "rs": 72,
    "sector_rs": 85,
    "flag": null,
-   "rs_prev": 80
+   "rs_prev": 74
   },
   "MARUTI": {
    "sector": "Automobiles & Auto Components",
-   "ret3m": -7.74,
-   "rs": 36,
-   "sector_rs": 34,
+   "ret3m": 1.46,
+   "rs": 58,
+   "sector_rs": 60,
    "flag": null,
-   "rs_prev": 37
+   "rs_prev": 32
   },
   "MAXHEALTH": {
    "sector": "Healthcare",
-   "ret3m": 0.83,
-   "rs": 64,
-   "sector_rs": 66,
+   "ret3m": 8.33,
+   "rs": 74,
+   "sector_rs": 99,
    "flag": null,
-   "rs_prev": 23
+   "rs_prev": 39
   },
   "MAZDOCK": {
    "sector": "General Industrials",
-   "ret3m": -29.56,
+   "ret3m": -28.35,
    "rs": 3,
    "sector_rs": 1,
    "flag": null,
@@ -1213,71 +1213,71 @@
   },
   "MCX": {
    "sector": "Banking and Finance",
-   "ret3m": 19.05,
-   "rs": 94,
-   "sector_rs": 89,
+   "ret3m": 13.08,
+   "rs": 87,
+   "sector_rs": 70,
    "flag": null,
-   "rs_prev": 98
+   "rs_prev": 97
   },
   "MFSL": {
    "sector": "Banking and Finance",
-   "ret3m": -10.33,
-   "rs": 28,
-   "sector_rs": 14,
+   "ret3m": -8.88,
+   "rs": 27,
+   "sector_rs": 20,
    "flag": null,
-   "rs_prev": 15
+   "rs_prev": 33
   },
   "MOTHERSON": {
    "sector": "Automobiles & Auto Components",
-   "ret3m": -7.72,
-   "rs": 36,
-   "sector_rs": 40,
-   "flag": null,
-   "rs_prev": 61
-  },
-  "MOTILALOFS": {
-   "sector": "Banking and Finance",
-   "ret3m": 31.02,
-   "rs": 99,
-   "sector_rs": 99,
-   "flag": null,
-   "rs_prev": 98
-  },
-  "MPHASIS": {
-   "sector": "Software & Services",
-   "ret3m": -1.44,
-   "rs": 55,
-   "sector_rs": 36,
-   "flag": null,
-   "rs_prev": 38
-  },
-  "MUTHOOTFIN": {
-   "sector": "Banking and Finance",
-   "ret3m": -8.78,
-   "rs": 32,
-   "sector_rs": 22,
+   "ret3m": -1.8,
+   "rs": 47,
+   "sector_rs": 34,
    "flag": null,
    "rs_prev": 57
   },
+  "MOTILALOFS": {
+   "sector": "Banking and Finance",
+   "ret3m": 23.86,
+   "rs": 96,
+   "sector_rs": 93,
+   "flag": null,
+   "rs_prev": 99
+  },
+  "MPHASIS": {
+   "sector": "Software & Services",
+   "ret3m": -0.41,
+   "rs": 53,
+   "sector_rs": 43,
+   "flag": null,
+   "rs_prev": 50
+  },
+  "MUTHOOTFIN": {
+   "sector": "Banking and Finance",
+   "ret3m": -14.12,
+   "rs": 14,
+   "sector_rs": 9,
+   "flag": null,
+   "rs_prev": 58
+  },
   "NAM-INDIA": {
    "sector": "Banking and Finance",
-   "ret3m": -10.08,
-   "rs": 29,
-   "sector_rs": 18,
+   "ret3m": -14.81,
+   "rs": 13,
+   "sector_rs": 7,
    "flag": null,
-   "rs_prev": 35
+   "rs_prev": 36
   },
   "NATIONALUM": {
    "sector": "Metals & Mining",
-   "ret3m": -20.59,
-   "rs": 7,
+   "ret3m": -21.37,
+   "rs": 6,
    "sector_rs": 1,
    "flag": null,
-   "rs_prev": 8
+   "rs_prev": 7
   },
   "NAUKRI": {
    "sector": "Retailing",
-   "ret3m": -14.75,
+   "ret3m": -13.46,
    "rs": 16,
    "sector_rs": 17,
    "flag": null,
@@ -1285,191 +1285,191 @@
   },
   "NAVINFLUOR": {
    "sector": "Chemicals & Petrochemicals",
-   "ret3m": 24.51,
-   "rs": 96,
-   "sector_rs": 99,
-   "flag": null,
-   "rs_prev": 94
-  },
-  "NBCC": {
-   "sector": "Cement and Construction",
-   "ret3m": -12.14,
-   "rs": 23,
-   "sector_rs": 15,
-   "flag": null,
-   "rs_prev": 11
-  },
-  "NESTLEIND": {
-   "sector": "FMCG",
-   "ret3m": -12.37,
-   "rs": 22,
-   "sector_rs": 15,
-   "flag": null,
-   "rs_prev": 13
-  },
-  "NHPC": {
-   "sector": "Utilities",
-   "ret3m": -2.96,
-   "rs": 50,
-   "sector_rs": 66,
-   "flag": null,
-   "rs_prev": 65
-  },
-  "NMDC": {
-   "sector": "Metals & Mining",
-   "ret3m": -18.95,
-   "rs": 9,
-   "sector_rs": 11,
-   "flag": null,
-   "rs_prev": 7
-  },
-  "NTPC": {
-   "sector": "Utilities",
-   "ret3m": -4.95,
-   "rs": 45,
-   "sector_rs": 45,
-   "flag": null,
-   "rs_prev": 44
-  },
-  "NYKAA": {
-   "sector": "Retailing",
-   "ret3m": 9.79,
-   "rs": 84,
-   "sector_rs": 83,
-   "flag": null,
-   "rs_prev": 84
-  },
-  "OBEROIRLTY": {
-   "sector": "Realty",
-   "ret3m": -3.12,
-   "rs": 50,
-   "sector_rs": 21,
-   "flag": null,
-   "rs_prev": 46
-  },
-  "OFSS": {
-   "sector": "Software & Services",
-   "ret3m": -16.59,
-   "rs": 11,
-   "sector_rs": 8,
-   "flag": null,
-   "rs_prev": 9
-  },
-  "OIL": {
-   "sector": "Oil & Gas",
-   "ret3m": -9.37,
-   "rs": 30,
-   "sector_rs": 1,
-   "flag": null,
-   "rs_prev": 39
-  },
-  "ONGC": {
-   "sector": "Oil & Gas",
-   "ret3m": -6.05,
-   "rs": 41,
-   "sector_rs": 17,
-   "flag": null,
-   "rs_prev": 50
-  },
-  "PAGEIND": {
-   "sector": "Textiles Apparels & Accessories",
-   "ret3m": -15.42,
-   "rs": 14,
-   "sector_rs": 1,
-   "flag": null,
-   "rs_prev": 40
-  },
-  "PATANJALI": {
-   "sector": "FMCG",
-   "ret3m": 14.03,
-   "rs": 90,
-   "sector_rs": 99,
-   "flag": null,
-   "rs_prev": 96
-  },
-  "PAYTM": {
-   "sector": "Software & Services",
-   "ret3m": 22.23,
+   "ret3m": 22.06,
    "rs": 95,
-   "sector_rs": 99,
-   "flag": null,
-   "rs_prev": 89
-  },
-  "PERSISTENT": {
-   "sector": "Software & Services",
-   "ret3m": 7.62,
-   "rs": 77,
-   "sector_rs": 78,
-   "flag": null,
-   "rs_prev": 79
-  },
-  "PETRONET": {
-   "sector": "Oil & Gas",
-   "ret3m": 13.71,
-   "rs": 90,
    "sector_rs": 99,
    "flag": null,
    "rs_prev": 95
   },
-  "PFC": {
-   "sector": "Banking and Finance",
-   "ret3m": -13.59,
-   "rs": 18,
+  "NBCC": {
+   "sector": "Cement and Construction",
+   "ret3m": -9.8,
+   "rs": 23,
+   "sector_rs": 15,
+   "flag": null,
+   "rs_prev": 13
+  },
+  "NESTLEIND": {
+   "sector": "FMCG",
+   "ret3m": -9.12,
+   "rs": 26,
+   "sector_rs": 15,
+   "flag": null,
+   "rs_prev": 9
+  },
+  "NHPC": {
+   "sector": "Utilities",
+   "ret3m": 0.34,
+   "rs": 54,
+   "sector_rs": 55,
+   "flag": null,
+   "rs_prev": 55
+  },
+  "NMDC": {
+   "sector": "Metals & Mining",
+   "ret3m": -17.93,
+   "rs": 9,
    "sector_rs": 11,
    "flag": null,
-   "rs_prev": 25
+   "rs_prev": 6
   },
-  "PGEL": {
-   "sector": "Consumer Durables",
-   "ret3m": -9.68,
-   "rs": 29,
-   "sector_rs": 69,
+  "NTPC": {
+   "sector": "Utilities",
+   "ret3m": -4.74,
+   "rs": 38,
+   "sector_rs": 34,
+   "flag": null,
+   "rs_prev": 34
+  },
+  "NYKAA": {
+   "sector": "Retailing",
+   "ret3m": 10.19,
+   "rs": 80,
+   "sector_rs": 83,
+   "flag": null,
+   "rs_prev": 85
+  },
+  "OBEROIRLTY": {
+   "sector": "Realty",
+   "ret3m": -3.24,
+   "rs": 41,
+   "sector_rs": 21,
+   "flag": null,
+   "rs_prev": 54
+  },
+  "OFSS": {
+   "sector": "Software & Services",
+   "ret3m": -17.42,
+   "rs": 9,
+   "sector_rs": 8,
+   "flag": null,
+   "rs_prev": 15
+  },
+  "OIL": {
+   "sector": "Oil & Gas",
+   "ret3m": -10.17,
+   "rs": 22,
+   "sector_rs": 1,
    "flag": null,
    "rs_prev": 30
   },
+  "ONGC": {
+   "sector": "Oil & Gas",
+   "ret3m": -6.31,
+   "rs": 33,
+   "sector_rs": 17,
+   "flag": null,
+   "rs_prev": 40
+  },
+  "PAGEIND": {
+   "sector": "Textiles Apparels & Accessories",
+   "ret3m": -12.63,
+   "rs": 16,
+   "sector_rs": 1,
+   "flag": null,
+   "rs_prev": 13
+  },
+  "PATANJALI": {
+   "sector": "FMCG",
+   "ret3m": 14.73,
+   "rs": 89,
+   "sector_rs": 99,
+   "flag": null,
+   "rs_prev": 94
+  },
+  "PAYTM": {
+   "sector": "Software & Services",
+   "ret3m": 8.51,
+   "rs": 75,
+   "sector_rs": 85,
+   "flag": null,
+   "rs_prev": 94
+  },
+  "PERSISTENT": {
+   "sector": "Software & Services",
+   "ret3m": 7.93,
+   "rs": 74,
+   "sector_rs": 78,
+   "flag": null,
+   "rs_prev": 82
+  },
+  "PETRONET": {
+   "sector": "Oil & Gas",
+   "ret3m": 12.95,
+   "rs": 86,
+   "sector_rs": 99,
+   "flag": null,
+   "rs_prev": 93
+  },
+  "PFC": {
+   "sector": "Banking and Finance",
+   "ret3m": -8.49,
+   "rs": 29,
+   "sector_rs": 22,
+   "flag": null,
+   "rs_prev": 20
+  },
+  "PGEL": {
+   "sector": "Consumer Durables",
+   "ret3m": -2.22,
+   "rs": 46,
+   "sector_rs": 69,
+   "flag": null,
+   "rs_prev": 32
+  },
   "PHOENIXLTD": {
    "sector": "Realty",
-   "ret3m": 13.64,
-   "rs": 89,
-   "sector_rs": 79,
+   "ret3m": 18.72,
+   "rs": 94,
+   "sector_rs": 99,
    "flag": null,
-   "rs_prev": 90
+   "rs_prev": 94
   },
   "PIDILITIND": {
    "sector": "Chemicals & Petrochemicals",
-   "ret3m": -8.59,
-   "rs": 34,
+   "ret3m": -2.41,
+   "rs": 45,
    "sector_rs": 26,
    "flag": null,
-   "rs_prev": 36
+   "rs_prev": 23
   },
   "PIIND": {
    "sector": "Chemicals & Petrochemicals",
-   "ret3m": -35.43,
+   "ret3m": -35.65,
    "rs": 2,
    "sector_rs": 1,
    "flag": null,
-   "rs_prev": 1
+   "rs_prev": 2
   },
   "PNB": {
    "sector": "Banking and Finance",
-   "ret3m": 28.39,
-   "rs": 98,
-   "sector_rs": 97,
+   "ret3m": 31.64,
+   "rs": 99,
+   "sector_rs": 99,
    "flag": null,
    "rs_prev": 96
   },
   "PNBHOUSING": {
    "sector": "Banking and Finance",
-   "ret3m": -1.79,
-   "rs": 53,
-   "sector_rs": 38,
+   "ret3m": 1.34,
+   "rs": 57,
+   "sector_rs": 41,
    "flag": null,
-   "rs_prev": 51
+   "rs_prev": 48
   },
   "POLICYBZR": {
    "sector": "Software & Services",
-   "ret3m": -40.74,
+   "ret3m": -42.53,
    "rs": 1,
    "sector_rs": 1,
    "flag": null,
@@ -1477,263 +1477,263 @@
   },
   "POLYCAB": {
    "sector": "Consumer Durables",
-   "ret3m": -20.04,
-   "rs": 8,
-   "sector_rs": 16,
-   "flag": null,
-   "rs_prev": 16
-  },
-  "POWERGRID": {
-   "sector": "Utilities",
-   "ret3m": -3.32,
-   "rs": 49,
-   "sector_rs": 55,
-   "flag": null,
-   "rs_prev": 52
-  },
-  "POWERINDIA": {
-   "sector": "General Industrials",
-   "ret3m": -12.57,
-   "rs": 21,
-   "sector_rs": 47,
-   "flag": null,
-   "rs_prev": 7
-  },
-  "PREMIERENE": {
-   "sector": "Consumer Durables",
-   "ret3m": -17.96,
+   "ret3m": -17.04,
    "rs": 10,
    "sector_rs": 24,
    "flag": null,
-   "rs_prev": 9
+   "rs_prev": 11
+  },
+  "POWERGRID": {
+   "sector": "Utilities",
+   "ret3m": 1.59,
+   "rs": 59,
+   "sector_rs": 66,
+   "flag": null,
+   "rs_prev": 50
+  },
+  "POWERINDIA": {
+   "sector": "General Industrials",
+   "ret3m": -10.03,
+   "rs": 22,
+   "sector_rs": 53,
+   "flag": null,
+   "rs_prev": 23
+  },
+  "PREMIERENE": {
+   "sector": "Consumer Durables",
+   "ret3m": -19.76,
+   "rs": 7,
+   "sector_rs": 16,
+   "flag": null,
+   "rs_prev": 14
   },
   "PRESTIGE": {
    "sector": "Realty",
-   "ret3m": 4.24,
-   "rs": 71,
+   "ret3m": 5.96,
+   "rs": 70,
    "sector_rs": 60,
    "flag": null,
-   "rs_prev": 70
+   "rs_prev": 67
   },
   "RADICO": {
    "sector": "Food, Beverages & Tobacco",
-   "ret3m": -1.43,
-   "rs": 55,
+   "ret3m": -0.66,
+   "rs": 50,
    "sector_rs": 60,
    "flag": null,
-   "rs_prev": 49
+   "rs_prev": 58
   },
   "RBLBANK": {
    "sector": "Banking and Finance",
-   "ret3m": 1.17,
-   "rs": 65,
+   "ret3m": 1.53,
+   "rs": 58,
+   "sector_rs": 43,
+   "flag": null,
+   "rs_prev": 61
+  },
+  "RECLTD": {
+   "sector": "Banking and Finance",
+   "ret3m": -9.14,
+   "rs": 26,
+   "sector_rs": 18,
+   "flag": null,
+   "rs_prev": 16
+  },
+  "RELIANCE": {
+   "sector": "Oil & Gas",
+   "ret3m": 4.9,
+   "rs": 68,
+   "sector_rs": 50,
+   "flag": null,
+   "rs_prev": 65
+  },
+  "RVNL": {
+   "sector": "Cement and Construction",
+   "ret3m": -16.19,
+   "rs": 11,
+   "sector_rs": 1,
+   "flag": null,
+   "rs_prev": 16
+  },
+  "SAGILITY": {
+   "sector": "Healthcare",
+   "ret3m": 6.12,
+   "rs": 71,
+   "sector_rs": 66,
+   "flag": null,
+   "rs_prev": 70
+  },
+  "SAIL": {
+   "sector": "Metals & Mining",
+   "ret3m": -6.17,
+   "rs": 34,
+   "sector_rs": 50,
+   "flag": null,
+   "rs_prev": 74
+  },
+  "SBICARD": {
+   "sector": "Banking and Finance",
+   "ret3m": -10.48,
+   "rs": 21,
+   "sector_rs": 14,
+   "flag": null,
+   "rs_prev": 25
+  },
+  "SBILIFE": {
+   "sector": "Banking and Finance",
+   "ret3m": 2.5,
+   "rs": 61,
    "sector_rs": 49,
    "flag": null,
    "rs_prev": 59
   },
-  "RECLTD": {
-   "sector": "Banking and Finance",
-   "ret3m": -14.14,
-   "rs": 17,
-   "sector_rs": 9,
-   "flag": null,
-   "rs_prev": 25
-  },
-  "RELIANCE": {
-   "sector": "Oil & Gas",
-   "ret3m": 3.1,
-   "rs": 68,
-   "sector_rs": 50,
-   "flag": null,
-   "rs_prev": 63
-  },
-  "RVNL": {
-   "sector": "Cement and Construction",
-   "ret3m": -16.0,
-   "rs": 12,
-   "sector_rs": 1,
-   "flag": null,
-   "rs_prev": 27
-  },
-  "SAGILITY": {
-   "sector": "Healthcare",
-   "ret3m": 7.09,
-   "rs": 76,
-   "sector_rs": 99,
-   "flag": null,
-   "rs_prev": 69
-  },
-  "SAIL": {
-   "sector": "Metals & Mining",
-   "ret3m": -3.64,
-   "rs": 48,
-   "sector_rs": 60,
-   "flag": null,
-   "rs_prev": 66
-  },
-  "SBICARD": {
-   "sector": "Banking and Finance",
-   "ret3m": -8.7,
-   "rs": 32,
-   "sector_rs": 24,
-   "flag": null,
-   "rs_prev": 24
-  },
-  "SBILIFE": {
-   "sector": "Banking and Finance",
-   "ret3m": 0.56,
-   "rs": 63,
-   "sector_rs": 45,
-   "flag": null,
-   "rs_prev": 43
-  },
   "SBIN": {
    "sector": "Banking and Finance",
-   "ret3m": 7.79,
-   "rs": 79,
-   "sector_rs": 68,
+   "ret3m": 11.17,
+   "rs": 83,
+   "sector_rs": 66,
    "flag": null,
-   "rs_prev": 59
+   "rs_prev": 62
   },
   "SHREECEM": {
    "sector": "Cement and Construction",
-   "ret3m": 0.44,
-   "rs": 62,
-   "sector_rs": 57,
+   "ret3m": 4.84,
+   "rs": 67,
+   "sector_rs": 85,
    "flag": null,
-   "rs_prev": 56
+   "rs_prev": 55
   },
   "SHRIRAMFIN": {
    "sector": "Banking and Finance",
-   "ret3m": -12.49,
-   "rs": 22,
-   "sector_rs": 13,
+   "ret3m": -13.85,
+   "rs": 15,
+   "sector_rs": 11,
    "flag": null,
-   "rs_prev": 11
+   "rs_prev": 12
   },
   "SIEMENS": {
    "sector": "General Industrials",
-   "ret3m": -11.04,
-   "rs": 26,
+   "ret3m": -7.66,
+   "rs": 32,
    "sector_rs": 64,
    "flag": null,
-   "rs_prev": 32
+   "rs_prev": 29
   },
   "SOLARINDS": {
    "sector": "General Industrials",
-   "ret3m": -8.68,
-   "rs": 33,
+   "ret3m": -5.31,
+   "rs": 36,
    "sector_rs": 76,
    "flag": null,
-   "rs_prev": 64
+   "rs_prev": 45
   },
   "SONACOMS": {
    "sector": "Automobiles & Auto Components",
-   "ret3m": 7.89,
-   "rs": 79,
-   "sector_rs": 86,
+   "ret3m": 8.59,
+   "rs": 76,
+   "sector_rs": 79,
    "flag": null,
-   "rs_prev": 93
+   "rs_prev": 92
   },
   "SRF": {
    "sector": "Chemicals & Petrochemicals",
-   "ret3m": -7.03,
-   "rs": 39,
+   "ret3m": -2.32,
+   "rs": 45,
    "sector_rs": 50,
-   "flag": null,
-   "rs_prev": 48
-  },
-  "SUNPHARMA": {
-   "sector": "Pharmaceuticals & Biotechnology",
-   "ret3m": -0.19,
-   "rs": 59,
-   "sector_rs": 42,
-   "flag": null,
-   "rs_prev": 50
-  },
-  "SUPREMEIND": {
-   "sector": "General Industrials",
-   "ret3m": -12.57,
-   "rs": 21,
-   "sector_rs": 53,
    "flag": null,
    "rs_prev": 44
   },
+  "SUNPHARMA": {
+   "sector": "Pharmaceuticals & Biotechnology",
+   "ret3m": -1.0,
+   "rs": 49,
+   "sector_rs": 42,
+   "flag": null,
+   "rs_prev": 53
+  },
+  "SUPREMEIND": {
+   "sector": "General Industrials",
+   "ret3m": -12.16,
+   "rs": 17,
+   "sector_rs": 41,
+   "flag": null,
+   "rs_prev": 43
+  },
   "SUZLON": {
    "sector": "General Industrials",
-   "ret3m": -24.38,
-   "rs": 5,
+   "ret3m": -21.36,
+   "rs": 6,
    "sector_rs": 18,
    "flag": null,
    "rs_prev": 5
   },
   "SWIGGY": {
    "sector": "Retailing",
-   "ret3m": -34.13,
-   "rs": 2,
+   "ret3m": -36.13,
+   "rs": 1,
    "sector_rs": 1,
    "flag": null,
-   "rs_prev": 2
+   "rs_prev": 1
   },
   "SYRMA": {
    "sector": "Consumer Durables",
-   "ret3m": -1.67,
-   "rs": 54,
+   "ret3m": 4.98,
+   "rs": 69,
    "sector_rs": 91,
    "flag": null,
-   "rs_prev": 65
+   "rs_prev": 70
   },
   "TATACONSUM": {
    "sector": "Food, Beverages & Tobacco",
-   "ret3m": 6.53,
-   "rs": 75,
+   "ret3m": 9.43,
+   "rs": 78,
    "sector_rs": 79,
    "flag": null,
-   "rs_prev": 66
+   "rs_prev": 59
   },
   "TATAELXSI": {
    "sector": "Software & Services",
-   "ret3m": 0.22,
-   "rs": 61,
-   "sector_rs": 50,
+   "ret3m": 5.19,
+   "rs": 70,
+   "sector_rs": 71,
    "flag": null,
-   "rs_prev": 67
+   "rs_prev": 65
   },
   "TATAPOWER": {
    "sector": "Utilities",
-   "ret3m": -11.29,
-   "rs": 25,
+   "ret3m": -9.47,
+   "rs": 26,
    "sector_rs": 12,
    "flag": null,
-   "rs_prev": 38
+   "rs_prev": 26
   },
   "TATASTEEL": {
    "sector": "Metals & Mining",
-   "ret3m": -3.5,
-   "rs": 48,
+   "ret3m": -3.0,
+   "rs": 42,
    "sector_rs": 70,
-   "flag": null,
-   "rs_prev": 62
-  },
-  "TCS": {
-   "sector": "Software & Services",
-   "ret3m": 4.36,
-   "rs": 71,
-   "sector_rs": 71,
    "flag": null,
    "rs_prev": 64
   },
+  "TCS": {
+   "sector": "Software & Services",
+   "ret3m": 3.4,
+   "rs": 64,
+   "sector_rs": 64,
+   "flag": null,
+   "rs_prev": 65
+  },
   "TECHM": {
    "sector": "Software & Services",
-   "ret3m": 9.92,
-   "rs": 84,
-   "sector_rs": 85,
+   "ret3m": 9.68,
+   "rs": 79,
+   "sector_rs": 92,
    "flag": null,
-   "rs_prev": 83
+   "rs_prev": 80
   },
   "TIINDIA": {
    "sector": "Automobiles & Auto Components",
-   "ret3m": -25.4,
+   "ret3m": -23.95,
    "rs": 4,
    "sector_rs": 1,
    "flag": null,
@@ -1741,155 +1741,155 @@
   },
   "TITAN": {
    "sector": "Textiles Apparels & Accessories",
-   "ret3m": -7.93,
-   "rs": 35,
+   "ret3m": -8.84,
+   "rs": 28,
    "sector_rs": 50,
    "flag": null,
-   "rs_prev": 45
+   "rs_prev": 46
   },
   "TMPV": {
    "sector": "Automobiles & Auto Components",
-   "ret3m": -21.76,
-   "rs": 6,
+   "ret3m": -16.83,
+   "rs": 11,
    "sector_rs": 8,
    "flag": null,
-   "rs_prev": 12
+   "rs_prev": 7
   },
   "TORNTPHARM": {
    "sector": "Pharmaceuticals & Biotechnology",
-   "ret3m": -7.25,
-   "rs": 38,
+   "ret3m": -6.3,
+   "rs": 34,
    "sector_rs": 17,
    "flag": null,
-   "rs_prev": 47
+   "rs_prev": 45
   },
   "TRENT": {
    "sector": "Retailing",
-   "ret3m": 8.43,
-   "rs": 81,
+   "ret3m": 9.63,
+   "rs": 79,
    "sector_rs": 66,
-   "flag": null,
-   "rs_prev": 78
-  },
-  "TVSMOTOR": {
-   "sector": "Automobiles & Auto Components",
-   "ret3m": 0.28,
-   "rs": 61,
-   "sector_rs": 66,
-   "flag": null,
-   "rs_prev": 71
-  },
-  "UJJIVANSFB": {
-   "sector": "Banking and Finance",
-   "ret3m": -15.32,
-   "rs": 14,
-   "sector_rs": 7,
-   "flag": null,
-   "rs_prev": 14
-  },
-  "ULTRACEMCO": {
-   "sector": "Cement and Construction",
-   "ret3m": 8.08,
-   "rs": 80,
-   "sector_rs": 99,
-   "flag": null,
-   "rs_prev": 73
-  },
-  "UNIONBANK": {
-   "sector": "Banking and Finance",
-   "ret3m": 12.06,
-   "rs": 87,
-   "sector_rs": 78,
-   "flag": null,
-   "rs_prev": 87
-  },
-  "UNITDSPR": {
-   "sector": "Food, Beverages & Tobacco",
-   "ret3m": -5.25,
-   "rs": 44,
-   "sector_rs": 21,
-   "flag": null,
-   "rs_prev": 28
-  },
-  "UNOMINDA": {
-   "sector": "Automobiles & Auto Components",
-   "ret3m": 7.62,
-   "rs": 78,
-   "sector_rs": 79,
-   "flag": null,
-   "rs_prev": 79
-  },
-  "UPL": {
-   "sector": "Chemicals & Petrochemicals",
-   "ret3m": -1.44,
-   "rs": 55,
-   "sector_rs": 74,
-   "flag": null,
-   "rs_prev": 48
-  },
-  "VBL": {
-   "sector": "Food, Beverages & Tobacco",
-   "ret3m": -3.36,
-   "rs": 49,
-   "sector_rs": 40,
-   "flag": null,
-   "rs_prev": 57
-  },
-  "VEDL": {
-   "sector": "Metals & Mining",
-   "ret3m": -7.05,
-   "rs": 39,
-   "sector_rs": 30,
-   "flag": null,
-   "rs_prev": 42
-  },
-  "VMM": {
-   "sector": "Retailing",
-   "ret3m": -13.0,
-   "rs": 20,
-   "sector_rs": 50,
-   "flag": null,
-   "rs_prev": 19
-  },
-  "VOLTAS": {
-   "sector": "Consumer Durables",
-   "ret3m": -9.44,
-   "rs": 30,
-   "sector_rs": 76,
-   "flag": null,
-   "rs_prev": 19
-  },
-  "WAAREEENER": {
-   "sector": "Consumer Durables",
-   "ret3m": -11.7,
-   "rs": 24,
-   "sector_rs": 54,
-   "flag": null,
-   "rs_prev": 34
-  },
-  "WIPRO": {
-   "sector": "Software & Services",
-   "ret3m": 3.98,
-   "rs": 70,
-   "sector_rs": 64,
    "flag": null,
    "rs_prev": 77
   },
+  "TVSMOTOR": {
+   "sector": "Automobiles & Auto Components",
+   "ret3m": 4.56,
+   "rs": 65,
+   "sector_rs": 73,
+   "flag": null,
+   "rs_prev": 72
+  },
+  "UJJIVANSFB": {
+   "sector": "Banking and Finance",
+   "ret3m": -16.95,
+   "rs": 10,
+   "sector_rs": 5,
+   "flag": null,
+   "rs_prev": 11
+  },
+  "ULTRACEMCO": {
+   "sector": "Cement and Construction",
+   "ret3m": 11.78,
+   "rs": 84,
+   "sector_rs": 99,
+   "flag": null,
+   "rs_prev": 71
+  },
+  "UNIONBANK": {
+   "sector": "Banking and Finance",
+   "ret3m": 18.5,
+   "rs": 93,
+   "sector_rs": 87,
+   "flag": null,
+   "rs_prev": 82
+  },
+  "UNITDSPR": {
+   "sector": "Food, Beverages & Tobacco",
+   "ret3m": -5.03,
+   "rs": 37,
+   "sector_rs": 21,
+   "flag": null,
+   "rs_prev": 39
+  },
+  "UNOMINDA": {
+   "sector": "Automobiles & Auto Components",
+   "ret3m": 9.48,
+   "rs": 79,
+   "sector_rs": 86,
+   "flag": null,
+   "rs_prev": 87
+  },
+  "UPL": {
+   "sector": "Chemicals & Petrochemicals",
+   "ret3m": 0.01,
+   "rs": 53,
+   "sector_rs": 74,
+   "flag": null,
+   "rs_prev": 57
+  },
+  "VBL": {
+   "sector": "Food, Beverages & Tobacco",
+   "ret3m": -2.46,
+   "rs": 45,
+   "sector_rs": 40,
+   "flag": null,
+   "rs_prev": 55
+  },
+  "VEDL": {
+   "sector": "Metals & Mining",
+   "ret3m": -11.18,
+   "rs": 20,
+   "sector_rs": 21,
+   "flag": null,
+   "rs_prev": 47
+  },
+  "VMM": {
+   "sector": "Retailing",
+   "ret3m": -10.35,
+   "rs": 21,
+   "sector_rs": 50,
+   "flag": null,
+   "rs_prev": 24
+  },
+  "VOLTAS": {
+   "sector": "Consumer Durables",
+   "ret3m": 1.27,
+   "rs": 57,
+   "sector_rs": 84,
+   "flag": null,
+   "rs_prev": 18
+  },
+  "WAAREEENER": {
+   "sector": "Consumer Durables",
+   "ret3m": -8.0,
+   "rs": 31,
+   "sector_rs": 46,
+   "flag": null,
+   "rs_prev": 44
+  },
+  "WIPRO": {
+   "sector": "Software & Services",
+   "ret3m": 2.6,
+   "rs": 62,
+   "sector_rs": 57,
+   "flag": null,
+   "rs_prev": 78
+  },
   "YESBANK": {
    "sector": "Banking and Finance",
-   "ret3m": -21.28,
+   "ret3m": -21.24,
    "rs": 6,
    "sector_rs": 1,
    "flag": null,
-   "rs_prev": 3
+   "rs_prev": 4
   },
   "ZYDUSLIFE": {
    "sector": "Pharmaceuticals & Biotechnology",
-   "ret3m": 7.74,
-   "rs": 79,
+   "ret3m": 8.33,
+   "rs": 75,
    "sector_rs": 50,
    "flag": null,
-   "rs_prev": 62
+   "rs_prev": 67
   }
  }
 }
