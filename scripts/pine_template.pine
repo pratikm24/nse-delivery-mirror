@@ -50,6 +50,7 @@ bool isBseIndex = exchange == "BSE" and syminfo.type == "index"
 bool isIndianExchange = exchange == "NSE" or exchange == "BSE" or exchange == "MCX"
 bool isDerivativeChart = isIndianExchange and (syminfo.type == "futures" or syminfo.type == "option")
 bool checkFutures = isNseStock or isNseIndex or isBseIndex
+bool isIndiaStock = (exchange == "NSE" or exchange == "BSE") and syminfo.type == "stock"
 
 // TradingView replaces hyphens and ampersands with underscores in these codes.
 string stockCode = str.replace_all(str.replace_all(syminfo.ticker, "-", "_"), "&", "_")
@@ -98,7 +99,7 @@ var string benchSym = ""
 var float stkRet = na
 var float idxRet = na
 var float relPts = na
-if barstate.islast and isNseStock and showRelInput
+if barstate.islast and isIndiaStock and showRelInput
     capCr := syminfo.shares_outstanding_total * close / 10000000.0
     benchSym := na(capCr) ? "" : capCr >= largeMinCrInput ? idxLargeInput : capCr >= midMinCrInput ? idxMidInput : idxSmallInput
 // Latest prices come from the chart's own last bar (stock) and the index on the same chart timeframe, so both are the latest close on any timeframe.
@@ -257,7 +258,7 @@ if barstate.islast
         table.cell(badge, 0, 1, text = "", bgcolor = color.new(color.white, 100))
 
     // Index-relative row (NSE stocks only)
-    if showRelInput and isNseStock and visibleBadge
+    if showRelInput and isIndiaStock
         string relText = ""
         string relTip = ""
         color relBg = color.new(color.white, 100)
