@@ -128,7 +128,7 @@ int trendThresholdInput = input.int(10, "RS trend: min weekly change (points)", 
 int staleDaysInput = input.int(9, "Mark RS data stale after (days)", minval = 1, maxval = 60, group = "RS", tooltip = "The ranking is refreshed weekly. Older than this and the RS turns amber.")
 
 bool showCompactInput = input.bool(true, "Show compact 1M / 3M RS table", group = "1M RS")
-string compactCornerInput = input.string("Bottom right", "Compact table corner", options = ["Top right", "Top left", "Middle right", "Middle left", "Bottom right", "Bottom left"], group = "1M RS")
+string compactCornerInput = input.string("Middle left", "Compact table corner", options = ["Top right", "Top left", "Middle right", "Middle left", "Bottom right", "Bottom left"], group = "1M RS")
 string compactSizeInput = input.string("Small", "Compact table text size", options = ["Tiny", "Small", "Normal"], group = "1M RS")
 int stale1mDaysInput = input.int(4, "Mark 1M RS data stale after (days)", minval = 1, maxval = 30, group = "1M RS", tooltip = "The 1M ranking is refreshed every weekday evening. Older than this (covers a weekend plus a holiday) and the 1M figures turn amber.")
 
