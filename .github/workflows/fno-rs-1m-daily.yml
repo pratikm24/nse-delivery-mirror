@@ -1,0 +1,45 @@
+name: F&O 1M RS (daily)
+
+# Separate from the weekly 3M job and from the 52W tracker. Writes only to fno-rs/ (rs1m*, closes_1m.json, FnO_RS.pine).
+# Weekdays 19:00 IST (13:30 UTC), after NSE publishes the day's bhavcopy. Run by hand any time from the Actions tab.
+
+on:
+  schedule:
+    - cron: "30 13 * * 1-5"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: fno-rs
+  cancel-in-progress: false
+
+jobs:
+  rs1m:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Compute 1M RS
+        run: python scripts/fno_rs_1m.py
+
+      - name: Build Pine script
+        run: python scripts/make_pine.py
+
+      - name: Commit results
+        run: |
+          git config user.name  "fno-rs-bot"
+          git config user.email "fno-rs-bot@users.noreply.github.com"
+          git add fno-rs
+          if git diff --cached --quiet; then
+            echo "No change."
+          else
+            git commit -m "F&O 1M RS: $(date -u +%Y-%m-%d)"
+            git pull --rebase
+            git push
+          fi
