@@ -28,12 +28,7 @@ def main():
     sec_data = ";".join(f"{name}:{rs['sectors'][name]['rs']}>{rs['sectors'][name]['rs_prev'] if rs['sectors'][name]['rs_prev'] is not None else '-'}:{rs['sectors'][name]['stocks_used']}"
                         for name in sorted(rs["sectors"], key=lambda n: -rs["sectors"][n]["rs"]))
     sec_members = ";".join(f"{name}=," + ",".join(tv(s) for s in lst) + "," for name, lst in uni.items())
-    r1, r2 = (DIR / "rs1m_pine.txt").read_text().strip().split("\n")
-    asof1m, prev1m, data1m = r1.split("|", 2)
-    rs1m_data = ",".join(tv(p.split(":")[0]) + ":" + p.split(":", 1)[1] for p in data1m.split(","))
     out = (pathlib.Path("scripts/pine_template.pine").read_text()
-           .replace("__ASOF1M__", asof1m).replace("__PREV1M__", prev1m if prev1m != "-" else "n/a")
-           .replace("__RS1M_DATA__", lit(rs1m_data)).replace("__SEC1M_DATA__", lit(r2, 900))
            .replace("__ASOF__", asof).replace("__PREV__", prev if prev != "-" else "n/a")
            .replace("__GENERATED__", datetime.now(IST).strftime("%Y-%m-%d"))
            .replace("__NROWS__", str(len(rs["sectors"]) + 2))

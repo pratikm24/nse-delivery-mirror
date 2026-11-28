@@ -17,10 +17,7 @@ indicator("India FnO Badge + RS", shorttitle = "FnO RS", overlay = true, dynamic
 // PINE SCREENER: the script outputs plots (RS now, RS last week, RS change, sector RS now/last week/change)
 // so it can be used as a screener filter. Plots are hidden from the chart pane (Data Window / status line only).
 //
-// 1M RS (new): same method as the 3M RS with a one-month look-back, refreshed daily by a second GitHub job.
-// Shown with the 3M RS in one compact table (stock and its sector) and as a 1M column in the sector table.
-// "Last wk" is the reading one week before the latest session. The 3M data above is unchanged.
-// Generated 2026-11-28 | 3M data as of 2026-11-27 (previous week: 2026-11-20) | 1M data as of 2026-11-27 (previous week: 2026-11-20)
+// Generated 2026-11-28 | 3M data as of 2026-11-27 (previous week: 2026-11-20)
 
 f_ist(int t) =>
     na(t) ? "n/a" : str.format_time(t, "dd MMM yyyy", "Asia/Kolkata")
@@ -127,22 +124,6 @@ string sectorSizeInput = input.string("Tiny", "Sector table text size", options 
 int trendThresholdInput = input.int(10, "RS trend: min weekly change (points)", minval = 1, maxval = 50, group = "RS", tooltip = "Screener column \"RS trend\": 1 = Rising (RS up by at least this many points vs last week), -1 = Falling (down by at least this many), 0 = Stale (smaller change).")
 int staleDaysInput = input.int(9, "Mark RS data stale after (days)", minval = 1, maxval = 60, group = "RS", tooltip = "The ranking is refreshed weekly. Older than this and the RS turns amber.")
 
-bool showCompactInput = input.bool(true, "Show compact 1M / 3M RS table", group = "1M RS")
-string compactCornerInput = input.string("Middle left", "Compact table corner", options = ["Top right", "Top left", "Middle right", "Middle left", "Bottom right", "Bottom left"], group = "1M RS")
-string compactSizeInput = input.string("Small", "Compact table text size", options = ["Tiny", "Small", "Normal"], group = "1M RS")
-int stale1mDaysInput = input.int(4, "Mark 1M RS data stale after (days)", minval = 1, maxval = 30, group = "1M RS", tooltip = "The 1M ranking is refreshed every weekday evening. Older than this (covers a weekend plus a holiday) and the 1M figures turn amber.")
-
-string compactPosition = switch compactCornerInput
-    "Top right" => position.top_right
-    "Top left" => position.top_left
-    "Middle right" => position.middle_right
-    "Middle left" => position.middle_left
-    "Bottom left" => position.bottom_left
-    => position.bottom_right
-string compactSize = switch compactSizeInput
-    "Tiny" => size.tiny
-    "Normal" => size.normal
-    => size.small
 
 string sectorPosition = switch sectorCornerInput
     "Top right" => position.top_right
@@ -172,18 +153,6 @@ string SEC_MEMBERS =
      "ECEM,;Realty=,OBEROIRLTY,PRESTIGE,DLF,LODHA,GODREJPROP,PHOENIXLTD,;FMCG=,COLPAL,MARICO,GODREJCP,DABUR,NESTLEIND,BRITANNIA,PATANJALI,HINDUNILVR,;Consumer Durables=,BLUESTARCO,SYRMA,AMBER,CROMPTON,PGEL,KAYNES,DIXON,PREMIERENE,ASIANPAINT,VOLTAS,KEI,HAVELLS,POLYCAB,WAAREEENER,;Software & Services=,INFY,OFSS,LTM,COFORGE,POLICYBZR,PERSISTENT,TCS,HCLTECH,TECHM,PAYTM,CAMS,TATAELXSI,MPHASIS,WIPRO,KPITTECH,;Automobiles & Auto Components=,ATHERENERG,MOTHERSON,TIINDIA,SONACOMS,BAJAJ_AUTO,FORCEMOT,TVSMOTOR,HEROMOTOCO,EICHERMOT,BOSCHLTD,TMPV,UNOMINDA,MARUTI,M_M,HYUNDAI,ASHOKLEY,;Oil & Gas=,HINDPETRO,BPCL,ONGC,OIL,IOC,PETRONET,RELIANCE,;Utilities=,ADANIENSOL,JSWENERGY,NTPC,POWERGRID,NHPC,ENRIN,TATAPOWER,GA" +
      "IL,ADANIPOWER,ADANIGREEN,;Metals & Mining=,SAIL,HINDZINC,JINDALSTEL,JSWSTEEL,COALINDIA,TATASTEEL,VEDL,NMDC,APLAPOLLO,NATIONALUM,HINDALCO,;Retailing=,NYKAA,TRENT,DMART,ETERNAL,VMM,SWIGGY,NAUKRI,;Diversified=,BAJAJFINSV,ABCAPITAL,;Telecom Services=,IDEA,INDUSTOWER,BHARTIARTL,;Healthcare=,SAGILITY,MAXHEALTH,FORTIS,APOLLOHOSP,;Chemicals & Petrochemicals=,UPL,SRF,PIDILITIND,PIIND,NAVINFLUOR,;Pharmaceuticals & Biotechnology=,ZYDUSLIFE,AUROPHARMA,ALKEM,TORNTPHARM,LAURUSLABS,LUPIN,BIOCON,CIPLA,SUNPHARMA,MANKIND,DRREDDY,DIVISLAB,GLENMARK,;Textiles Apparels & Accessories=,PAGEIND,TITAN,KALYANKJIL,;Hotels Restaurants & Tourism=,JUBLFOOD,INDHOTEL,;Transportation=,INDIGO,ADANIPORTS,DELHIVERY,COCHINSHIP,C" +
      "ONCOR,;Food, Beverages & Tobacco=,UNITDSPR,ITC,RADICO,VBL,TATACONSUM,GODFRYPHLP,;Commercial Services & Supplies=,ADANIENT,;Fertilizers=,COROMANDEL,"
-
-// ----- 1M data (written by the daily job) -----
-string RS1M_ASOF = "2026-11-27"
-string RS1M_PREV = "2026-11-20"
-string RS1M_DATA =
-     "360ONE:97>77,ABB:45>25,ABCAPITAL:79>73,ADANIENSOL:20>60,ADANIENT:34>29,ADANIGREEN:23>64,ADANIPORTS:40>58,ADANIPOWER:49>59,ALKEM:20>35,AMBER:68>34,AMBUJACEM:59>63,ANANDRATHI:37>61,ANGELONE:99>80,APLAPOLLO:1>22,APOLLOHOSP:84>89,ASHOKLEY:36>63,ASIANPAINT:64>69,ASTRAL:3>3,ATHERENERG:69>99,AUBANK:80>27,AUROPHARMA:57>66,AXISBANK:74>84,BAJAJ_AUTO:19>39,BAJAJFINSV:57>67,BAJFINANCE:85>85,BANDHANBNK:56>47,BANKBARODA:85>92,BANKINDIA:93>91,BDL:38>10,BEL:66>45,BHARATFORG:18>16,BHARTIARTL:29>80,BHEL:33>27,BIOCON:51>49,BLUESTARCO:71>75,BOSCHLTD:45>60,BPCL:29>46,BRITANNIA:63>38,BSE:75>73,CAMS:52>42,CANBK:63>74,CDSL:86>70,CGPOWER:6>7,CHOLAFIN:92>92,CIPLA:37>47,COALINDIA:11>9,COCHINSHIP:17>6,COFORGE:27>57,COL" +
-     "PAL:59>26,CONCOR:15>23,COROMANDEL:68>72,CROMPTON:42>49,CUB:54>52,CUMMINSIND:4>5,DABUR:77>36,DATAPATTNS:31>37,DELHIVERY:89>79,DIVISLAB:90>96,DIXON:83>57,DLF:88>84,DMART:60>43,DRREDDY:33>68,EICHERMOT:65>62,ENRIN:52>36,ETERNAL:56>74,FEDERALBNK:32>48,FORCEMOT:80>81,FORTIS:70>68,GAIL:65>77,GLENMARK:94>90,GMRAIRPORT:62>83,GODFRYPHLP:28>21,GODREJCP:62>58,GODREJPROP:92>94,GRASIM:43>53,GVT_D:39>54,HAL:30>15,HAVELLS:71>61,HCLTECH:18>17,HDFCAMC:87>79,HDFCBANK:96>88,HDFCLIFE:74>54,HEROMOTOCO:53>43,HINDALCO:26>33,HINDPETRO:52>74,HINDUNILVR:81>64,HINDZINC:60>14,HYUNDAI:44>72,ICICIBANK:76>87,ICICIGI:58>41,ICICILIFE:73>-,IDEA:7>23,IDFCFIRSTB:91>76,IEX:40>55,INDHOTEL:50>90,INDIANB:61>65,INDIGO:93>88,INDUSIND" +
-     "BK:76>83,INDUSTOWER:12>26,INFY:16>15,INOXWIND:3>2,IOC:54>81,IREDA:95>97,IRFC:58>46,ITC:84>78,JINDALSTEL:41>59,JIOFIN:41>40,JSWENERGY:24>45,JSWSTEEL:32>51,JUBLFOOD:12>31,KALYANKJIL:99>82,KARURVYSYA:34>29,KAYNES:2>5,KEI:9>2,KFINTECH:72>48,KOTAKBANK:70>84,KPITTECH:11>13,LAURUSLABS:82>66,LICHSGFIN:81>91,LICI:30>38,LODHA:94>87,LT:67>79,LTF:75>50,LTM:35>17,LUPIN:24>35,M_M:90>95,MAHABANK:88>96,MANAPPURAM:10>4,MANKIND:42>86,MARICO:86>85,MARUTI:89>95,MAXHEALTH:98>99,MAZDOCK:44>6,MCX:91>67,MFSL:78>69,MOTHERSON:21>42,MOTILALOFS:96>86,MPHASIS:5>14,MUTHOOTFIN:47>24,NAM_INDIA:62>26,NATIONALUM:15>10,NAUKRI:16>12,NAVINFLUOR:98>97,NBCC:38>55,NESTLEIND:64>45,NHPC:25>56,NMDC:13>18,NTPC:34>37,NYKAA:25>55,OBEROI" +
-     "RLTY:82>62,OFSS:4>11,OIL:6>11,ONGC:10>24,PAGEIND:2>3,PATANJALI:76>65,PAYTM:49>33,PERSISTENT:47>51,PETRONET:51>70,PFC:27>25,PGEL:72>82,PHOENIXLTD:83>94,PIDILITIND:57>60,PIIND:1>1,PNB:90>98,PNBHOUSING:43>35,POLICYBZR:85>21,POLYCAB:9>8,POWERGRID:35>50,POWERINDIA:55>40,PREMIERENE:5>7,PRESTIGE:97>75,RADICO:46>41,RBLBANK:66>44,RECLTD:22>21,RELIANCE:78>78,RVNL:31>20,SAGILITY:20>32,SAIL:8>16,SBICARD:39>30,SBILIFE:71>65,SBIN:87>89,SHREECEM:46>76,SHRIRAMFIN:67>40,SIEMENS:43>22,SOLARINDS:19>8,SONACOMS:24>70,SRF:55>34,SUNPHARMA:48>56,SUPREMEIND:10>4,SUZLON:13>6,SWIGGY:7>1,SYRMA:15>19,TATACONSUM:77>89,TATAELXSI:28>28,TATAPOWER:6>12,TATASTEEL:8>30,TCS:23>13,TECHM:17>20,TIINDIA:36>31,TITAN:38>39,TMPV:14>11" +
-     ",TORNTPHARM:50>32,TRENT:79>71,TVSMOTOR:61>71,UJJIVANSFB:26>9,ULTRACEMCO:69>94,UNIONBANK:73>93,UNITDSPR:80>50,UNOMINDA:94>98,UPL:48>53,VBL:21>28,VEDL:48>19,VMM:53>16,VOLTAS:95>93,WAAREEENER:29>18,WIPRO:22>30,YESBANK:66>44,ZYDUSLIFE:14>52"
-string SEC1M_DATA =
-     "Realty:99>99;Healthcare:95>95;Banking and Finance:90>68;FMCG:86>54;Diversified:81>81;Fertilizers:77>90;Food, Beverages & Tobacco:72>50;Automobiles & Auto Components:68>86;Transportation:63>41;Pharmaceuticals & Biotechnology:59>63;Textiles Apparels & Accessories:54>23;Cement and Construction:50>77;Chemicals & Petrochemicals:46>32;Consumer Durables:41>28;Retailing:37>14;Commercial Services & Supplies:32>19;Oil & Gas:28>59;Utilities:23>46;Hotels Restaurants & Tourism:19>72;Software & Services:14>10;General Industrials:10>1;Telecom Services:5>37;Metals & Mining:1>5"
 
 f_rs(string code) =>
     string hay = "," + RS_DATA
@@ -232,41 +201,6 @@ f_secval(string name) =>
                 prv := pv == "-" ? na : int(str.tonumber(pv))
     [cur, prv]
 
-// 1M helpers (same lookups as above, on the 1M data strings)
-f_rs1m(string code) =>
-    string hay = "," + RS1M_DATA
-    string key = "," + code + ":"
-    int p = str.pos(hay, key)
-    int cur = na
-    int prv = na
-    bool found = not na(p)
-    if found
-        string rest = str.substring(hay, p + str.length(key))
-        int e = str.pos(rest, ",")
-        string seg = na(e) ? rest : str.substring(rest, 0, e)
-        string[] parts = str.split(seg, ">")
-        cur := int(str.tonumber(array.get(parts, 0)))
-        string pv = array.size(parts) > 1 ? array.get(parts, 1) : "-"
-        prv := pv == "-" ? na : int(str.tonumber(pv))
-    [found, cur, prv]
-
-f_secval1m(string name) =>
-    int cur = na
-    int prv = na
-    if name != ""
-        string[] rows = str.split(SEC1M_DATA, ";")
-        for r in rows
-            string[] f = str.split(r, ":")
-            if array.get(f, 0) == name
-                string[] rv = str.split(array.get(f, 1), ">")
-                cur := int(str.tonumber(array.get(rv, 0)))
-                string pv = array.get(rv, 1)
-                prv := pv == "-" ? na : int(str.tonumber(pv))
-    [cur, prv]
-
-f_arrowS(int prv, int cur) =>
-    na(cur) ? "–" : f_arrow(prv, cur)
-
 // Computed once per symbol (the symbol does not change across bars).
 var bool rsFound = false
 var int rsCur = na
@@ -274,11 +208,6 @@ var int rsPrv = na
 var string mySector = ""
 var int secCur = na
 var int secPrv = na
-var bool rs1mFound = false
-var int rs1mCur = na
-var int rs1mPrv = na
-var int sec1mCur = na
-var int sec1mPrv = na
 if barstate.isfirst and isNseStock
     [fT, cT, pT] = f_rs(stockCode)
     rsFound := fT
@@ -288,13 +217,6 @@ if barstate.isfirst and isNseStock
     [sC, sP] = f_secval(mySector)
     secCur := sC
     secPrv := sP
-    [f1, c1, p1] = f_rs1m(stockCode)
-    rs1mFound := f1
-    rs1mCur := c1
-    rs1mPrv := p1
-    [s1C, s1P] = f_secval1m(mySector)
-    sec1mCur := s1C
-    sec1mPrv := s1P
 
 // Screener / data-window outputs (not drawn on the chart pane)
 plot(rsCur, "RS now (1-99)", display = display.data_window + display.status_line)
@@ -305,25 +227,14 @@ plot(rsCur - rsPrv, "RS change", display = display.data_window + display.status_
 plot(secCur, "Sector RS now (1-99)", display = display.data_window + display.status_line)
 plot(secPrv, "Sector RS last week (1-99)", display = display.data_window + display.status_line)
 plot(secCur - secPrv, "Sector RS change", display = display.data_window + display.status_line)
-plot(rs1mCur, "1M RS now (1-99)", display = display.data_window + display.status_line)
-plot(rs1mPrv, "1M RS last week (1-99)", display = display.data_window + display.status_line)
-plot(rs1mCur - rs1mPrv, "1M RS change", display = display.data_window + display.status_line)
-plot(sec1mCur, "Sector 1M RS now (1-99)", display = display.data_window + display.status_line)
-plot(sec1mPrv, "Sector 1M RS last week (1-99)", display = display.data_window + display.status_line)
-plot(sec1mCur - sec1mPrv, "Sector 1M RS change", display = display.data_window + display.status_line)
 
 int asofTs = timestamp("Asia/Kolkata", int(str.tonumber(str.substring(RS_ASOF, 0, 4))), int(str.tonumber(str.substring(RS_ASOF, 5, 7))), int(str.tonumber(str.substring(RS_ASOF, 8, 10))), 15, 30)
 float dataAgeDays = (timenow - asofTs) / 86400000.0
 bool rsStale = dataAgeDays > staleDaysInput
 string asofShort = str.format_time(asofTs, "dd MMM", "Asia/Kolkata")
-int asof1mTs = timestamp("Asia/Kolkata", int(str.tonumber(str.substring(RS1M_ASOF, 0, 4))), int(str.tonumber(str.substring(RS1M_ASOF, 5, 7))), int(str.tonumber(str.substring(RS1M_ASOF, 8, 10))), 15, 30)
-float data1mAgeDays = (timenow - asof1mTs) / 86400000.0
-bool rs1mStale = data1mAgeDays > stale1mDaysInput
-string asof1mShort = str.format_time(asof1mTs, "dd MMM", "Asia/Kolkata")
 
 var table badge = table.new(badgePosition, 1, 3, force_overlay = true)
-var table sectorTable = showSectorInput ? table.new(sectorPosition, 3, 25, force_overlay = true) : na
-var table compactTable = showCompactInput and isNseStock ? table.new(compactPosition, 3, 3, force_overlay = true) : na
+var table sectorTable = showSectorInput ? table.new(sectorPosition, 2, 25, force_overlay = true) : na
 
 if barstate.islast
     string badgeText = detected ? "FnO" : checkFutures ? (hasFeed ? "FnO ?" : "No FnO") : "FnO -"
@@ -378,27 +289,11 @@ if barstate.islast
     else
         table.cell(badge, 0, 2, text = "", bgcolor = color.new(color.white, 100))
 
-    // Compact 1M / 3M RS table (NSE stocks): stock row and sector row, last week -> now
-    if showCompactInput and isNseStock
-        color amberC = color.rgb(214, 158, 46)
-        color hdrBg = color.new(#131722, 10)
-        color rowBg = color.new(#131722, 25)
-        table.cell(compactTable, 0, 0, text = "RS", text_color = color.white, text_size = compactSize, bgcolor = hdrBg, text_halign = text.align_left)
-        table.cell(compactTable, 1, 0, text = "1M  " + asof1mShort + (rs1mStale ? " ⚠" : ""), text_color = rs1mStale ? amberC : color.rgb(170, 170, 170), text_size = compactSize, bgcolor = hdrBg, tooltip = "1M RS data as of " + RS1M_ASOF + ". Last wk = " + RS1M_PREV + (rs1mStale ? "\nDATA IS " + str.tostring(data1mAgeDays, "#") + " DAYS OLD: refresh the script." : ""))
-        table.cell(compactTable, 2, 0, text = "3M  " + asofShort + (rsStale ? " ⚠" : ""), text_color = rsStale ? amberC : color.rgb(170, 170, 170), text_size = compactSize, bgcolor = hdrBg, tooltip = "3M RS data as of " + RS_ASOF + ". Last wk = " + RS_PREV + (rsStale ? "\nDATA IS " + str.tostring(dataAgeDays, "#") + " DAYS OLD: refresh the script." : ""))
-        table.cell(compactTable, 0, 1, text = "Stock", text_color = color.white, text_size = compactSize, bgcolor = rowBg, text_halign = text.align_left)
-        table.cell(compactTable, 1, 1, text = rs1mFound ? f_arrow(rs1mPrv, rs1mCur) : "–", text_color = rs1mFound ? (rs1mStale ? amberC : f_col(rs1mPrv, rs1mCur)) : color.white, text_size = compactSize, bgcolor = rowBg, tooltip = rs1mFound ? "1M RS, percentile 1-99 among F&O stocks (higher = stronger). Last week: " + (na(rs1mPrv) ? "not ranked" : str.tostring(rs1mPrv)) + ", now: " + str.tostring(rs1mCur) : "Not ranked on 1M (not on the F&O list used, NSE split/bonus/rights ex-date in the 1-month window, or no price data).")
-        table.cell(compactTable, 2, 1, text = rsFound ? f_arrow(rsPrv, rsCur) : "–", text_color = rsFound ? (rsStale ? amberC : f_col(rsPrv, rsCur)) : color.white, text_size = compactSize, bgcolor = rowBg, tooltip = rsFound ? "3M RS, percentile 1-99 among F&O stocks (higher = stronger). Last week: " + (na(rsPrv) ? "not ranked" : str.tostring(rsPrv)) + ", now: " + str.tostring(rsCur) : "Not ranked on 3M.")
-        table.cell(compactTable, 0, 2, text = "Sector", text_color = color.white, text_size = compactSize, bgcolor = rowBg, text_halign = text.align_left, tooltip = mySector != "" ? mySector : "Sector not found")
-        table.cell(compactTable, 1, 2, text = f_arrowS(sec1mPrv, sec1mCur), text_color = na(sec1mCur) ? color.white : (rs1mStale ? amberC : f_col(sec1mPrv, sec1mCur)), text_size = compactSize, bgcolor = rowBg, tooltip = mySector)
-        table.cell(compactTable, 2, 2, text = f_arrowS(secPrv, secCur), text_color = na(secCur) ? color.white : (rsStale ? amberC : f_col(secPrv, secCur)), text_size = compactSize, bgcolor = rowBg, tooltip = mySector)
-
-    // Sector table (1M and 3M columns)
+    // Sector table (3M)
     if showSectorInput
         string[] rows = str.split(SEC_DATA, ";")
         table.cell(sectorTable, 0, 0, text = "Sector RS  (last wk → now)", text_color = color.white, text_size = sectorSize, bgcolor = color.new(#131722, 10), text_halign = text.align_left)
-        table.cell(sectorTable, 1, 0, text = "1M " + asof1mShort + (rs1mStale ? " ⚠" : ""), text_color = rs1mStale ? color.rgb(214, 158, 46) : color.rgb(170, 170, 170), text_size = sectorSize, bgcolor = color.new(#131722, 10))
-        table.cell(sectorTable, 2, 0, text = "3M " + asofShort + (rsStale ? " ⚠" : ""), text_color = rsStale ? color.rgb(214, 158, 46) : color.rgb(170, 170, 170), text_size = sectorSize, bgcolor = color.new(#131722, 10))
+        table.cell(sectorTable, 1, 0, text = "3M " + asofShort + (rsStale ? " ⚠" : ""), text_color = rsStale ? color.rgb(214, 158, 46) : color.rgb(170, 170, 170), text_size = sectorSize, bgcolor = color.new(#131722, 10))
         for i = 0 to array.size(rows) - 1
             string[] f = str.split(array.get(rows, i), ":")
             string nm = array.get(f, 0)
@@ -407,12 +302,9 @@ if barstate.islast
             string pv = array.get(rv, 1)
             int prv = pv == "-" ? na : int(str.tonumber(pv))
             int cnt = int(str.tonumber(array.get(f, 2)))
-            [cur1, prv1] = f_secval1m(nm)
             bool mine = nm == mySector
             color bg = mine ? color.new(color.rgb(41, 98, 255), 35) : color.new(#131722, 25)
             table.cell(sectorTable, 0, i + 1, text = nm + (cnt <= 2 ? " *" : ""), text_color = color.white, text_size = sectorSize, bgcolor = bg, text_halign = text.align_left, tooltip = str.tostring(cnt) + " ranked stock(s)")
-            table.cell(sectorTable, 1, i + 1, text = f_arrowS(prv1, cur1), text_color = na(cur1) ? color.white : f_col(prv1, cur1), text_size = sectorSize, bgcolor = bg, text_halign = text.align_right)
-            table.cell(sectorTable, 2, i + 1, text = f_arrow(prv, cur), text_color = f_col(prv, cur), text_size = sectorSize, bgcolor = bg, text_halign = text.align_right)
+            table.cell(sectorTable, 1, i + 1, text = f_arrow(prv, cur), text_color = f_col(prv, cur), text_size = sectorSize, bgcolor = bg, text_halign = text.align_right)
         table.cell(sectorTable, 0, array.size(rows) + 1, text = "* only 1-2 stocks: noisy", text_color = color.rgb(170, 170, 170), text_size = sectorSize, bgcolor = color.new(#131722, 25), text_halign = text.align_left)
         table.cell(sectorTable, 1, array.size(rows) + 1, text = "", bgcolor = color.new(#131722, 25))
-        table.cell(sectorTable, 2, array.size(rows) + 1, text = "", bgcolor = color.new(#131722, 25))
