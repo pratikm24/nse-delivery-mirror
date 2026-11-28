@@ -1,11 +1,11 @@
 name: F&O 3M RS (weekly)
 
 # Separate from the 52W tracker's workflow. Writes only to fno-rs/.
-# Saturday 09:00 IST (03:30 UTC), after Friday's close. Run by hand any time from the Actions tab.
+# Friday 19:00 IST (13:30 UTC), after NSE publishes Friday's bhavcopy. Run by hand any time from the Actions tab.
 
 on:
   schedule:
-    - cron: "30 3 * * 6"
+    - cron: "30 13 * * 5"
   workflow_dispatch:
 
 permissions:
